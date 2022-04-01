@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useState } from "react";
-import Home from "./Home";
+
 
 
 
@@ -25,21 +25,22 @@ function Signup() {
 try {
   const res = await
   axios({
-  method: 'post',
+  method: 'POST',
   url: "http://localhost:3080/signup",
-  data: {
+  data: JSON.stringify({
     name, email, password, role
-  },
-  // headers: {'Content-Type': 'application/json'}
+  }),
+  headers: {'Content-Type': 'application/json'}
 });
-  const data = await res.json();
-  console.log(data);
-    if (data.errors) {
-      emailError.textContent = data.errors.email;
-      passwordError.textContent = data.errors.password;
-    }
+console.log(res.data)
+  const data = res.data;
+  console.log(data.user);
+    // if (data.errors) {
+    //   emailError.textContent = data.errors.email;
+    //   passwordError.textContent = data.errors.password;
+    // }
     if (data.user) {
-      <Home />
+      window.location = '/'
     }
   
 } catch (error) {
