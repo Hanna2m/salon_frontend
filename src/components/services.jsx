@@ -42,6 +42,7 @@ function Services() {
                 <span>€{s.cost}</span>
                 <span> Duration: {s.duration}mins </span>
               </div>
+              <button>Book now</button>
             </div>
           ))}
       </div>
