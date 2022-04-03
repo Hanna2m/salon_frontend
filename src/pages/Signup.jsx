@@ -2,8 +2,6 @@ import axios from "axios";
 import React, { useState } from "react";
 
 
-
-
 function Signup() {
   // const form = document.querySelector('form');
   const [name, setName] = useState();
@@ -18,34 +16,9 @@ function Signup() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     console.log(name, email, password, role);
-    //reset errors
-    emailError.textContent = '';
-    passwordError.textContent = '';
 
-try {
-  const res = await
-  axios({
-  method: 'POST',
-  url: "http://localhost:3080/signup",
-  data: JSON.stringify({
-    name, email, password, role
-  }),
-  headers: {'Content-Type': 'application/json'}
-});
-console.log(res.data)
-  const data = res.data;
-  console.log(data.user);
-    // if (data.errors) {
-    //   emailError.textContent = data.errors.email;
-    //   passwordError.textContent = data.errors.password;
-    // }
-    if (data.user) {
-      window.location = '/'
-    }
-  
-} catch (error) {
-  console.log(error)
-}
+
+
 }
    return (
     <div>

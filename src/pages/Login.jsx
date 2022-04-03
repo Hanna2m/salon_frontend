@@ -1,44 +1,31 @@
-import axios from "axios";
 import React, { useState } from "react";
+import { useEffect } from "react";
+import { useLocation, useNavigate } from "react-router-dom";
+import AuthService from "../services/auth.service";
 
 function Login() {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
-    const emailError = document.querySelector('.email.error');
-    const passwordError = document.querySelector('.password.error');
+    const [token, setToken] = useState();
+    const location = useLocation();
+    const navigate = useNavigate();
+    let user = {};
 
     const handleSubmit = async(e) => {
         e.preventDefault();
         console.log(email, password)
-        //reset errors
-        emailError.textContent = '';
-        passwordError.textContent = '';
-        
-        try {
-            const res = await
-            axios({
-            method: 'POST',
-            url: "http://localhost:3080/login",
-            data: JSON.stringify({
-              email, password
-            }),
-            headers: {'Content-Type': 'application/json'}
-          });
-          console.log(res.data)
-            const data = res.data;
-            console.log(data.user);
-              if (data.errors) {
-                emailError.textContent = data.errors.email;
-                passwordError.textContent = data.errors.password;
-              }
-              if (data.user) {
-                window.location = '/'
-              }
-            
-          } catch (error) {
-            console.log(error)
-          }
+        AuthService.login(email, password)
 
+        setTimeout(() => {
+            console.log(AuthService.getCurrentUser());
+            user = AuthService.getCurrentUser();
+            if(user.role === "admin"){
+            window.location = '/dashboard'
+        } else {
+            if(location.state?.from){
+            navigate(location.state.from)
+            }
+        }}, 500);     
     }
 
     return (
@@ -56,6 +43,5 @@ function Login() {
         </div>
     )
 }
-
 
 export default Login
