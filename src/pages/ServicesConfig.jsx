@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 
-function Services() {
+function ServicesConfig() {
   const [serviceTitle, setServiceTitle] = useState("");
   const [serviceDescription, setServiceDescription] = useState("");
   const [serviceCost, setServiceCost] = useState("");
@@ -94,4 +94,4 @@ function Services() {
   );
 }
 
-export default Services;
+export default ServicesConfig;
