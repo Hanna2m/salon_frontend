@@ -5,7 +5,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
-import Services from "./pages/Services";
+import ServicesConfig from "./pages/ServicesConfig";
 import Signup from "./pages/Signup";
 
 const rootElement = document.getElementById("root");
@@ -15,10 +15,10 @@ render(
     <Route path="/" element={<App />}>
       <Route path="signup" element={<Signup />}></Route>
       <Route path="login" element={<Login />}></Route>
-      <Route path="services" element={<Services />}></Route>
+      <Route path="services-config" element={<ServicesConfig />}></Route>
       <Route path="dashboard" element={<Dashboard />}></Route>
     </Route>
   </Routes>
   </BrowserRouter>,
   rootElement
-)
+);
