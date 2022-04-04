@@ -1,8 +1,11 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 
 function Services() {
   const [allServices, setAllServices] = useState("");
+
+  let navigate = useNavigate();
 
   useEffect(() => {
     getAllServices();
@@ -10,12 +13,21 @@ function Services() {
 
   const getAllServices = async () => {
     try {
-      await axios.get("https://groomer-server.herokuapp.com/service").then((res) => {
-        setAllServices(res.data);
-      });
+      await axios
+        .get("https://groomer-server.herokuapp.com/service")
+        .then((res) => {
+          setAllServices(res.data);
+        });
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  const handleSelectService = (e) => {
+    // console.log(e.target.id);
+    console.log(`number of slots required ${e.target.id / 15}`);
+    let path = "/booking";
+    navigate(path);
   };
 
   return (
@@ -42,7 +54,9 @@ function Services() {
                 <span>€{s.cost}</span>
                 <span> Duration: {s.duration}mins </span>
               </div>
-              <button>Book now</button>
+              <button id={s.duration} onClick={handleSelectService}>
+                Book now
+              </button>
             </div>
           ))}
       </div>
