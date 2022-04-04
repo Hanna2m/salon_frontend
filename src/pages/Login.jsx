@@ -1,5 +1,4 @@
 import React, { useState } from "react";
-import { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import AuthService from "../services/auth.service";
 
@@ -35,7 +34,7 @@ function Login() {
             <label htmlFor="email">Email</label>
             <input name="email" onChange={(e) => setEmail(e.target.value)}></input>
             <div className="email error"></div>
-            <label htmlFor="password">Password</label>
+            <label htmlFor="password" type="password">Password</label>
             <input name="password" onChange={(e) => setPassword(e.target.value)}></input>
             <div className="password error"></div>
             <button onClick={handleSubmit}>Log in</button>

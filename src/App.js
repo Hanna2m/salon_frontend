@@ -1,7 +1,5 @@
-import React, {useState} from 'react';
 import "./App.css";
 import Home from "./pages/Home";
-import { Link, Outlet } from "react-router-dom";
 
 function App() {
   return (

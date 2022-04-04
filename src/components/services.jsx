@@ -10,7 +10,7 @@ function Services() {
 
   const getAllServices = async () => {
     try {
-      await axios.get("http://localhost:3080/service").then((res) => {
+      await axios.get("https://groomer-server.herokuapp.com/service").then((res) => {
         setAllServices(res.data);
       });
     } catch (error) {

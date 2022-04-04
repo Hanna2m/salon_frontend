@@ -7,6 +7,7 @@ function ServicesConfig() {
   const [serviceCost, setServiceCost] = useState("");
   const [serviceDuration, setServiceDuration] = useState("");
   const [allServices, setAllServices] = useState("");
+  const API_URL = "https://groomer-server.herokuapp.com/service/ "
 
   useEffect(() => {
     getAllServices();
@@ -14,7 +15,7 @@ function ServicesConfig() {
 
   const getAllServices = async () => {
     try {
-      await axios.get("http://localhost:3080/service").then((res) => {
+      await axios.get(API_URL).then((res) => {
         setAllServices(res.data);
       });
     } catch (error) {
@@ -27,7 +28,7 @@ function ServicesConfig() {
 
     try {
       await axios
-        .post("http://localhost:3080/service/create-service", {
+        .post(API_URL+"create-service", {
           title: serviceTitle,
           description: serviceDescription,
           cost: serviceCost,
