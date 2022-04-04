@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_URL = "http://localhost:3080/";
+const API_URL = "https://groomer-server.herokuapp.com/";
 
 const signup = async (name, email, password, role) => {
     try {
