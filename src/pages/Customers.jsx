@@ -8,6 +8,7 @@ import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
 import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
+import ModalAddCustomer from "../components/modalAddCustomer";
 
 
 function Customers(){
@@ -15,6 +16,7 @@ function Customers(){
     const[allCustomers, setAllCustomers] = useState();
     const [loading, setLoading] = useState(true);
     const API_URL = "https://groomer-server.herokuapp.com/customer/";
+    const [show, setShow] = useState(false)
     
 
     useEffect(() => {
@@ -33,13 +35,17 @@ function Customers(){
           console.log(error.message);
         }
     };
+
+    const handleAddNew = () => {
+        
+    }
     
     if (loading) {return "Loading..."} else {console.log(allCustomers)}
 
     return (
         <>
         <h2>Customers</h2>
-        <button>Add customer</button>
+        <button onClick={() => setShow(true)}>Add customer</button>
         <MaUTable>
 
             <TableHead>
@@ -66,16 +72,7 @@ function Customers(){
                 </TableRow>
             </TableBody>))}
         </MaUTable>
-    
-
-        {/* {allCustomers &&
-            allCustomers.map((c) => (
-              <div>
-                <h4>Name: {c.name}</h4>
-              </div>
-            ))} */}
-
-        
+        <ModalAddCustomer onClose={() => setShow(false)} show={show}/>
         </>
     )
 }

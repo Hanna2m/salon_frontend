@@ -8,7 +8,7 @@ function ServicesConfig() {
   const [serviceCost, setServiceCost] = useState("");
   const [serviceDuration, setServiceDuration] = useState("");
   const [allServices, setAllServices] = useState("");
-  const API_URL = "https://groomer-server.herokuapp.com/service/ ";
+  const API_URL = "https://groomer-server.herokuapp.com/service/";
 
   useEffect(() => {
     getAllServices();
@@ -29,7 +29,7 @@ function ServicesConfig() {
 
     try {
       await axios
-        .post(API_URL + "create-service", {
+        .post(API_URL+"create-service", {
           title: serviceTitle,
           description: serviceDescription,
           cost: serviceCost,
