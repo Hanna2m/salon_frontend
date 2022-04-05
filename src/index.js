@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { render } from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
+import Customers from "./pages/Customers";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import ServicesConfig from "./pages/ServicesConfig";
@@ -17,6 +18,7 @@ render(
         <Route path="signup" element={<Signup />}></Route>
         <Route path="login" element={<Login />}></Route>
         <Route path="services" element={<ServicesConfig />}></Route>
+        <Route path="customers" element={<Customers />}></Route>
         <Route path="dashboard" element={<Dashboard />}></Route>
         <Route path="booking" element={<Booking />}></Route>
       </Route>
