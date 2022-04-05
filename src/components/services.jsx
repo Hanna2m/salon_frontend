@@ -1,9 +1,12 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import Button from "./Button";
 
 function Services() {
   const [allServices, setAllServices] = useState("");
+
+  let navigate = useNavigate();
 
   useEffect(() => {
     getAllServices();
@@ -19,6 +22,13 @@ function Services() {
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  const handleSelectService = (e) => {
+    // console.log(e.target.id);
+    console.log(`number of slots required ${e.target.id / 15}`);
+    let path = "/booking";
+    navigate(path);
   };
 
   return (
@@ -45,7 +55,9 @@ function Services() {
                 <span>€{s.cost}</span>
                 <span> Duration: {s.duration}mins </span>
               </div>
-              <Button btnTxt="Book now" />
+              <button id={s.duration} onClick={handleSelectService}>
+                Book now
+              </button>
             </div>
           ))}
       </div>

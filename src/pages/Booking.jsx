@@ -1,14 +1,18 @@
 import React from "react";
 
-import Header from "../components/Header";
 import NewBookingDate from "../components/NewBookingDate";
+import ServiceSummary from "../components/ServiceSummary";
+import Header from "../components/Header";
 
 function Booking() {
   return (
-    <>
-      <Header />
+    <section>
+    <Header />
+      <section>
+        <ServiceSummary />
+      </section>
       <NewBookingDate />
-    </>
+    </section>
   );
 }
 

@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { render } from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
+import Customers from "./pages/Customers";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import ServicesConfig from "./pages/ServicesConfig";
