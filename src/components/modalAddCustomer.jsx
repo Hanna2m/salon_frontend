@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import UserContent from "../services/userContent.service";
 import "./Modal.css";
+import ModalInform from "./ModalInform";
 
 const ModalAddCustomer = props => {
     const[name, setName] = useState();
@@ -23,8 +24,9 @@ const ModalAddCustomer = props => {
     }, [])
 
     const handleSubmit = () => {
-        UserContent.addNewCustomer(name, email, phone);
-        UserContent.addNewCustomersDog(dogName, size, hair);
+        UserContent.addNewCustomer(name, email, phone, dogName, size, hair);
+        props.onClose()
+        window.location.reload();
     }
 
     if(!props.show) {

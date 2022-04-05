@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const API_URL = "https://groomer-server.herokuapp.com/customer/";
+const API_URL = "https://groomer-server.herokuapp.com/customer";
 
 
 
@@ -16,12 +16,13 @@ const getCustomer = async(id) => {
   }
 }
 
-const addNewCustomer = async(name, email, phone) => {
+const addNewCustomer = async(name, email, phone, dogName, size, hair) => {
+  const dogs = [{dogName, size, hair}]
   try {
     await axios({
       method: "POST",
       url: API_URL,
-      data: JSON.stringify({ name, email, phone}),
+      data: JSON.stringify({ name, email, phone, dogs}),
       headers: {'Content-Type': 'application/json'}
     })
     .then((res) => console.log("POST", res.data))
@@ -30,24 +31,10 @@ const addNewCustomer = async(name, email, phone) => {
   }
 }
 
-const addNewCustomersDog = async(dogName, size, hair) => {
-  try {
-    await axios({
-      method: "POST",
-      url: API_URL,
-      data: JSON.stringify({ dogName, size, hair }),
-      headers: {'Content-Type': 'application/json'}
-    })
-    .then((res) => console.log("POST", res.data))
-  } catch (error) {
-    console.log(error)
-  }
-}
 
 const UserContent = {
     getCustomer,
-    addNewCustomer,
-    addNewCustomersDog
+    addNewCustomer
 }
 
 export default UserContent;
