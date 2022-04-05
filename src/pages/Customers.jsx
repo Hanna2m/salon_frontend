@@ -47,7 +47,6 @@ function Customers(){
         <h2>Customers</h2>
         <button onClick={() => setShow(true)}>Add customer</button>
         <MaUTable>
-
             <TableHead>
                 <TableRow>
                     <TableCell>Name</TableCell>
