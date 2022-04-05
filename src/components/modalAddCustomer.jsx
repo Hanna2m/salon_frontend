@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import UserContent from "../services/userContent.service";
 import "./Modal.css";
-import ModalInform from "./ModalInform";
 
 const ModalAddCustomer = props => {
     const[name, setName] = useState();
