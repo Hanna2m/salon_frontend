@@ -18,6 +18,7 @@ render(
         <Route path="signup" element={<Signup />}></Route>
         <Route path="login" element={<Login />}></Route>
         <Route path="services" element={<ServicesConfig />}></Route>
+        <Route path="customers" element={<Customers />}></Route>
         <Route path="dashboard" element={<Dashboard />}></Route>
         <Route path="booking" element={<Booking />}></Route>
       </Route>

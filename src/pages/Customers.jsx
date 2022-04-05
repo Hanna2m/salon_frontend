@@ -19,9 +19,20 @@ function Customers(){
 
     useEffect(() => {
         setLoading(true)
-        setCustomer(UserContent.getAllCustomers());
-        setLoading(false)
+        getAllCustomers();
     }, []);
+
+    const getAllCustomers = async () => {
+        try {
+          await axios.get(API_URL)
+          .then((res) => {
+            setAllCustomers(res.data);
+            setLoading(false)
+          });
+        } catch (error) {
+          console.log(error.message);
+        }
+    };
     
     if (loading) {return "Loading..."} else {console.log(allCustomers)}
 
@@ -51,7 +62,7 @@ function Customers(){
                     <TableCell>{c.dogs.map((d) => (
                         <p>{d.dogName}</p>
                     ))}</TableCell>
-                    
+
                 </TableRow>
             </TableBody>))}
         </MaUTable>
