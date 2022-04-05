@@ -1,13 +1,13 @@
 import React from "react";
 
-import Header from "../components/header";
-import Services from "../components/services";
+import Header from "../components/Header";
+import Services from "../components/Services";
 
 function Home() {
   return (
     <>
       <Header />
-      {/* <Services /> */}
+      <Services />
     </>
   );
 }

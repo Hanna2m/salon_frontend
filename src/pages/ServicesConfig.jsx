@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
+import Header from "../components/Header";
 
 function ServicesConfig() {
   const [serviceTitle, setServiceTitle] = useState("");
@@ -7,7 +8,7 @@ function ServicesConfig() {
   const [serviceCost, setServiceCost] = useState("");
   const [serviceDuration, setServiceDuration] = useState("");
   const [allServices, setAllServices] = useState("");
-  const API_URL = "https://groomer-server.herokuapp.com/service/ "
+  const API_URL = "https://groomer-server.herokuapp.com/service/ ";
 
   useEffect(() => {
     getAllServices();
@@ -28,7 +29,7 @@ function ServicesConfig() {
 
     try {
       await axios
-        .post(API_URL+"create-service", {
+        .post(API_URL + "create-service", {
           title: serviceTitle,
           description: serviceDescription,
           cost: serviceCost,
@@ -42,6 +43,7 @@ function ServicesConfig() {
 
   return (
     <div>
+      <Header />
       <h2>Services component</h2>
       <h3>Add New Service</h3>
       <form onSubmit={addNewService}>
