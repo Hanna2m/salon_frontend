@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
+import Button from "./Button";
 
 function Services() {
   const [allServices, setAllServices] = useState("");
@@ -10,9 +11,11 @@ function Services() {
 
   const getAllServices = async () => {
     try {
-      await axios.get("https://groomer-server.herokuapp.com/service").then((res) => {
-        setAllServices(res.data);
-      });
+      await axios
+        .get("https://groomer-server.herokuapp.com/service")
+        .then((res) => {
+          setAllServices(res.data);
+        });
     } catch (error) {
       console.log(error.message);
     }
@@ -42,7 +45,7 @@ function Services() {
                 <span>€{s.cost}</span>
                 <span> Duration: {s.duration}mins </span>
               </div>
-              <button>Book now</button>
+              <Button btnTxt="Book now" />
             </div>
           ))}
       </div>
