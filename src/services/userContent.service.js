@@ -1,7 +1,7 @@
 import axios from "axios";
 import { useState } from "react";
 
-const API_URL = "https://groomer-server.herokuapp.com/customer";
+const API_URL = "https://groomer-server.herokuapp.com/customer/";
 
 
 
@@ -34,7 +34,7 @@ const addNewCustomersDog = async(dogName, size, hair) => {
   try {
     await axios({
       method: "POST",
-      url: API_URL+"customer",
+      url: API_URL,
       data: JSON.stringify({ dogName, size, hair }),
       headers: {'Content-Type': 'application/json'}
     })

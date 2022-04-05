@@ -24,7 +24,7 @@ const ModalAddCustomer = props => {
 
     const handleSubmit = () => {
         UserContent.addNewCustomer(name, email, phone);
-        // UserContent.addNewCustomersDog(dogName, size, hair);
+        UserContent.addNewCustomersDog(dogName, size, hair);
     }
 
     if(!props.show) {
