@@ -14,14 +14,12 @@ const rootElement = document.getElementById("root");
 render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" element={<App />}>
-        <Route path="signup" element={<Signup />}></Route>
-        <Route path="login" element={<Login />}></Route>
-        <Route path="services" element={<ServicesConfig />}></Route>
-        <Route path="customers" element={<Customers />}></Route>
-        <Route path="dashboard" element={<Dashboard />}></Route>
-        <Route path="booking" element={<Booking />}></Route>
-      </Route>
+      <Route path="/" element={<App />}></Route>
+      <Route path="signup" element={<Signup />}></Route>
+      <Route path="login" element={<Login />}></Route>
+      <Route path="services" element={<ServicesConfig />}></Route>
+      <Route path="dashboard" element={<Dashboard />}></Route>
+      <Route path="booking" element={<Booking />}></Route>
     </Routes>
   </BrowserRouter>,
   rootElement
