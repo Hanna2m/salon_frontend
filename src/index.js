@@ -9,6 +9,7 @@ import Login from "./pages/Login";
 import ServicesConfig from "./pages/ServicesConfig";
 import Signup from "./pages/Signup";
 import Booking from "./pages/Booking";
+import SelectedCustomer from "./pages/SelectedCustomer";
 
 const rootElement = document.getElementById("root");
 render(
@@ -20,6 +21,8 @@ render(
       <Route path="services" element={<ServicesConfig />}></Route>
       <Route path="dashboard" element={<Dashboard />}></Route>
       <Route path="customers" element={<Customers />}></Route>
+      <Route path=":customerId" element={<SelectedCustomer />}>
+      </Route>
       <Route path="booking" element={<Booking />}></Route>
     </Routes>
   </BrowserRouter>,

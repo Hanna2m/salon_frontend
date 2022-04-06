@@ -3,19 +3,6 @@ import { useState } from "react";
 
 const API_URL = "https://groomer-server.herokuapp.com/customer";
 
-
-
-const getCustomer = async(id) => {
-  try {
-    await axios.get(API_URL+`{id}`)
-    .then((res) => {
-      return(res.data)
-    })
-  } catch (error) {
-    console.log(error.message);
-  }
-}
-
 const addNewCustomer = async(name, email, phone, dogName, size, hair) => {
   const dogs = [{dogName, size, hair}]
   try {
@@ -33,7 +20,6 @@ const addNewCustomer = async(name, email, phone, dogName, size, hair) => {
 
 
 const UserContent = {
-    getCustomer,
     addNewCustomer
 }
 
