@@ -1,23 +1,16 @@
-import { useState, useMemo } from "react";
-import { useEffect } from "react";
-import UserContent from "../services/userContent.service";
+import { useState, useEffect} from "react";
 import axios from "axios";
-import { Link } from "react-router-dom";
-import MaUTable from "@material-ui/core/Table";
-import TableBody from "@material-ui/core/TableBody";
-import TableCell from "@material-ui/core/TableCell";
-import TableHead from "@material-ui/core/TableHead";
-import TableRow from "@material-ui/core/TableRow";
 import ModalAddCustomer from "../components/modalAddCustomer";
+import TableCustomers from "../components/Table";
 
 
 function Customers(){
+    const [query, setQuery] = useState('');
+    const [show, setShow] = useState(false)
     const[customer, setCustomer] = useState();
     const[allCustomers, setAllCustomers] = useState();
     const [loading, setLoading] = useState(true);
     const API_URL = "https://groomer-server.herokuapp.com/customer/";
-    const [show, setShow] = useState(false)
-    
 
     useEffect(() => {
         setLoading(true)
@@ -36,41 +29,18 @@ function Customers(){
         }
     };
 
-    const handleAddNew = () => {
-        
-    }
-    
     if (loading) {return "Loading..."} else {console.log(allCustomers)}
+
+    const search = (data) => {
+        return data.filter(item => item.name.toLowerCase().includes(query))
+    }
 
     return (
         <>
         <h2>Customers</h2>
         <button onClick={() => setShow(true)}>Add customer</button>
-        <MaUTable>
-            <TableHead>
-                <TableRow>
-                    <TableCell>Name</TableCell>
-                    <TableCell>Email</TableCell>
-                    <TableCell>Phone</TableCell>
-                    <TableCell>Dog(s)</TableCell>
-                    <TableCell></TableCell>
-                    <TableCell></TableCell>
-                </TableRow>
-            </TableHead>
-            {allCustomers &&
-            allCustomers.map((c) => (
-            <TableBody>
-                <TableRow>
-                    <TableCell>{c.name}</TableCell>
-                    <TableCell>{c.email}</TableCell>
-                    <TableCell>{c.phone}</TableCell>
-                    <TableCell>{c.dogs.map((d) => (
-                        <p>{d.dogName}</p>
-                    ))}</TableCell>
-
-                </TableRow>
-            </TableBody>))}
-        </MaUTable>
+        <input type="text" placeholder="Search..." className="search" onChange={e => setQuery(e.target.value)}/>
+        <TableCustomers data={search(allCustomers)}/>
         <ModalAddCustomer onClose={() => setShow(false)} show={show}/>
         </>
     )
