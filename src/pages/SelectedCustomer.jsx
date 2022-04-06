@@ -59,7 +59,6 @@ return (
         </ul>
         <button>Add dog</button>   
     </div>
-    {/* <p>{customer}</p> */}
     </>
 )
 }
