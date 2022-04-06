@@ -25,7 +25,6 @@ const ModalAddCustomer = props => {
     const handleSubmit = () => {
         UserContent.addNewCustomer(name, email, phone, dogName, size, hair);
         props.onClose()
-        window.location.reload();
     }
 
     if(!props.show) {
