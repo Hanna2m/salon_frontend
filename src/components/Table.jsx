@@ -15,7 +15,6 @@ function TableCustomers( { data }){
         console.log(`row clicked ${user}`);
         console.log(typeof(user));
         navigate(`/${user}`)
-        // navigate("/dashboard")
     }
 
     return (
@@ -27,7 +26,6 @@ function TableCustomers( { data }){
                     <TableCell>Email</TableCell>
                     <TableCell>Phone</TableCell>
                     <TableCell>Dog(s)</TableCell>
-                    <TableCell></TableCell>
                 </TableRow>
             </TableHead>
             {data &&
@@ -40,9 +38,6 @@ function TableCustomers( { data }){
                     <TableCell >{c.dogs.map((d) => (
                         <p key={d._id}>{d.dogName}</p>
                     ))}</TableCell>
-                    <TableCell>
-                        <Button>Book time</Button>
-                    </TableCell>
                 </TableRow>
                
             </TableBody>))}
