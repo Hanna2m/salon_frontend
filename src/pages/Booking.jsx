@@ -7,7 +7,7 @@ import Header from "../components/Header";
 function Booking() {
   return (
     <section>
-    <Header />
+      <Header />
       <section>
         <ServiceSummary />
       </section>

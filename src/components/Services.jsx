@@ -26,7 +26,7 @@ function Services() {
 
   const handleSelectService = (e) => {
     // console.log(e.target.id);
-    console.log(`number of slots required ${e.target.id / 15}`);
+    // console.log(`number of slots required ${e.target.id / 15}`);
     let path = "/booking";
     navigate(path);
   };
