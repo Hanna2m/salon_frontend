@@ -1,12 +1,15 @@
 import React from "react";
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
+import Modal from "../components/Modal";
 
 const SelectedCustomer = () => {
     let params = useParams();
-    const [customer, setCustomer] = useState()
+    let navigate = useNavigate();
+    const [customer, setCustomer] = useState();
     const [loading, setLoading] = useState(true);
+    const [show, setShow] = useState(false);
     const id = params.customerId;
     console.log(id)
     const API_URL = "https://groomer-server.herokuapp.com/customer/";
@@ -29,12 +32,28 @@ const SelectedCustomer = () => {
           console.log(error.message);
         }
       }
-    
+
+    const handleDelete = async() => {
+            const element = document.querySelector('#info');
+            try {
+            await axios.delete(API_URL+`${id}`)
+            .then(element.innerHTML = 'Delete successful',
+            setShow(false))
+            } catch (error) {
+            console.log(error)
+            }}   
+       setTimeout(()=>{
+        navigate("/customers")
+    }, 10000)    
+        
+
     if(loading) {return "Loading..."} else {console.log(customer)}
     
 return (
     <>
-    <h4>Customer {customer.name}</h4>
+    <div id="info">
+    <h4>{customer.name}</h4>
+    <button onClick={() => setShow(true)}>Delete</button>
     <button>Book time</button>
     <div className="contact-info">
         <h5>Contact information</h5>
@@ -58,7 +77,14 @@ return (
         </ul>
         <button>Add dog</button>   
     </div>
+    </div>
+    <Modal 
+            onClose={() => setShow(false)} show={show} 
+            onSubmit={() => handleDelete()}>
+            The information about Customer {customer.name} would be deleted. Are you sure?
+        </Modal>
     </>
+    
 )
 }
 

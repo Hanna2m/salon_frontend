@@ -7,14 +7,14 @@ import Modal from "../components/Modal";
 function Customers(){
     const [query, setQuery] = useState('');
     const [show, setShow] = useState(false)
-    const[allCustomers, setAllCustomers] = useState();
+    const [allCustomers, setAllCustomers] = useState();
     const [loading, setLoading] = useState(true);
-    const[name, setName] = useState();
-    const[email, setEmail] = useState();
-    const[phone, setPhone] = useState();
-    const[dogName, setDogName] = useState();
-    const[size, setSize] = useState();
-    const[hair, setHair] = useState();
+    const [name, setName] = useState();
+    const [email, setEmail] = useState();
+    const [phone, setPhone] = useState();
+    const [dogName, setDogName] = useState();
+    const [size, setSize] = useState();
+    const [hair, setHair] = useState();
     const API_URL = "https://groomer-server.herokuapp.com/customer/";
 
 
