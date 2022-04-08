@@ -53,27 +53,22 @@ const SelectedCustomer = () => {
        
     
     const handleAddDog = async(dogName, size, hair) => {
-        const dog = [{dogName, size, hair}]
-        const dogs = customer.dogs.push({dogName, size, hair});
-        console.log(customer.dogs)
-        console.log({dogs})
-        console.log(customer)
+        const newDog = { dogName, size, hair };
+        customer.dogs.push(newDog);
+
         try {
-          await fetch({
-            method: "PUT",
-            url: API_URL+`${id}`,
-            data: JSON.stringify({dogs}),
-            headers: {'Content-Type': 'application/json'}
-          })
-          .then((res) => {
-              console.log("POST", res.data)
-              setShowAdd(false)
-              navigate(`/${id}`)
+        axios
+            .put(API_URL + id, customer, {
+             headers: { "Content-Type": "application/json" },
             })
+            .then((res) => {
+          console.log("POST", res.data);
+          setShowAdd(false);
+          navigate(`/${id}`);
+            });
         } catch (error) {
-          console.log(error)
-        }
-      }
+        console.log(error);
+    }}
 
     if(loading) {return "Loading..."} else {console.log(customer)}
     
