@@ -18,7 +18,7 @@ function DogDetails() {
   };
 
   return (
-    <form>
+    <form onSubmit={handleConfirm}>
       <h4>Please provide details about your dog</h4>
       <label htmlFor="dogName">Dog's name</label>
       <input
@@ -53,7 +53,7 @@ function DogDetails() {
         value="long"
         onChange={(e) => setHair(e.target.value)}
       />
-      <Button btnTxt="confirm" onClick={handleConfirm} />
+      <Button btnTxt="confirm" btnType="submit" />
     </form>
   );
 }
