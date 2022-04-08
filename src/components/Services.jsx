@@ -24,10 +24,11 @@ function Services() {
     }
   };
 
-  const handleSelectService = (e) => {
-    // console.log(e.target.id);
+  const handleSelectService = (id) => {
+    console.log(id);
     // console.log(`number of slots required ${e.target.id / 15}`);
-    let path = "/booking";
+    // let path = `/booking/${id}`;
+    let path = `/booking`;
     navigate(path);
   };
 
@@ -55,7 +56,10 @@ function Services() {
                 <span>€{s.cost}</span>
                 <span> Duration: {s.duration}mins </span>
               </div>
-              <button id={s.duration} onClick={handleSelectService}>
+              <button
+                id={s.duration}
+                onClick={() => handleSelectService(s._id)}
+              >
                 Book now
               </button>
             </div>

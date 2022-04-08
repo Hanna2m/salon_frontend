@@ -52,11 +52,36 @@
   {
     "date": "2022-04-09 00:00:00",
     "startTime": "13:00",
+    "isAvailable": false
+  },
+  {
+    "date": "2022-04-09 00:00:00",
+    "startTime": "13:30",
     "isAvailable": true
   },
   {
-    "date": "2022-04-08 00:00:00",
-    "startTime": "13:30",
+    "date": "2022-04-10 00:00:00",
+    "startTime": "14:30",
+    "isAvailable": true
+  },
+  {
+    "date": "2022-04-10 00:00:00",
+    "startTime": "15:00",
+    "isAvailable": true
+  },
+  {
+    "date": "2022-04-10 00:00:00",
+    "startTime": "15:30",
+    "isAvailable": true
+  },
+  {
+    "date": "2022-04-10 00:00:00",
+    "startTime": "16:00",
+    "isAvailable": true
+  },
+  {
+    "date": "2022-04-10 00:00:00",
+    "startTime": "17:00",
     "isAvailable": true
   }
 ]
