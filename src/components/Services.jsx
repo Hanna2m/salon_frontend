@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Button from "./Button";
 
 function Services() {
   const [allServices, setAllServices] = useState("");
@@ -25,22 +24,14 @@ function Services() {
   };
 
   const handleSelectService = (id) => {
-    console.log(id);
-    // console.log(`number of slots required ${e.target.id / 15}`);
-    // let path = `/booking/${id}`;
-    let path = `/booking`;
+    let path = `/booking/${id}`;
     navigate(path);
   };
 
   return (
     <section>
       <h2>SERVICES LIST</h2>
-      <div
-      // style={{
-      //   display: "flex",
-      //   border: "1px solid red",
-      // }}
-      >
+      <div>
         {allServices &&
           allServices.map((s) => (
             <div

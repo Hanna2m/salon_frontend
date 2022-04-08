@@ -2,30 +2,45 @@ import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import parseISO from "date-fns/parseISO";
 import { useParams } from "react-router-dom";
+import axios from "axios";
+import "react-datepicker/dist/react-datepicker.css";
 
 import DogDetails from "./DogDetails";
-
-// datepicker css file
-import "react-datepicker/dist/react-datepicker.css";
-import axios from "axios";
+import ServiceSummary from "./ServiceSummary";
 
 function NewBookingDate() {
-  const { id } = useParams();
+  const { serviceId } = useParams();
   const [startDate, setStartDate] = useState(new Date());
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
+  const [selectedService, setSelectedService] = useState({});
 
-  // const API_URL = `https://groomer-server.herokuapp.com/booking/${id}`;
+  const params = useParams();
+  const id = params.serviceId;
+
+  const API_URL = `https://groomer-server.herokuapp.com/service/${id}`;
 
   useEffect(() => {
     getTimeSlots();
     setStartDate(new Date());
-    // console.log(id);
-    // axios.get using id
+    // console.log("serviceID: ", id);
+    getSelectedServiceData();
   }, []);
 
   useEffect(() => {
     getTimeSlots();
   }, [startDate]);
+
+  const getSelectedServiceData = async () => {
+    try {
+      await axios.get(API_URL).then((res) => {
+        let data = res.data;
+        // console.log(data);
+        setSelectedService(data);
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const handleDateChange = (date) => {
     setAvailableTimeSlots([]);
@@ -67,9 +82,9 @@ function NewBookingDate() {
 
   return (
     <div>
-      {/* <section>
-        <DogDetails />
-      </section> */}
+      <section>
+        <ServiceSummary selectedService={selectedService} />
+      </section>
       <section>
         <DogDetails />
       </section>
