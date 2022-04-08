@@ -1,9 +1,9 @@
 import React from "react";
 
 function Button(props) {
-  const { btnTxt } = props;
+  const { btnTxt, btnType } = props;
 
-  return <button type="button">{btnTxt}</button>;
+  return <button type={btnType}>{btnTxt}</button>;
 }
 
 export default Button;
