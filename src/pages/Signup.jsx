@@ -1,5 +1,5 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
@@ -10,7 +10,7 @@ function Signup() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
   const [role, setRole] = useState();
-  const API_URL = "https://groomer-server.herokuapp.com/signup";
+  const API_URL = "https://groomer-server.herokuapp.com/user";
 
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -32,11 +32,20 @@ function Signup() {
   const {
     register,
     handleSubmit,
+    watch,
     reset,
     formState: { errors }
   } = useForm({
     resolver: yupResolver(validationSchema)
   })
+
+  useEffect(() => {
+    register({name: 'email', type: 'custom'}, {validate: { isUnique }})
+  }, [])
+
+  const isUnique = email => {
+
+  }
 
   const onSubmit = async (e) => {
     e.preventDefault();
