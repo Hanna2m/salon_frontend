@@ -61,7 +61,7 @@ function NewBookingDate() {
 
   const getTimeSlots = async () => {
     try {
-      await axios.get("/appointments.json").then((response) => {
+      await axios.get("https://groomer-server.herokuapp.com/day").then((response) => {
         let data = response.data;
         // console.log(response.data);
         for (let i = 0; i < data.length; i++) {
