@@ -1,0 +1,24 @@
+.hero-container {
+  color: rgb(9, 0, 65);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  display: flex;
+  flex-direction: row-reverse;
+  text-align: left;
+  margin: 2rem 0;
+}
+
+.hero-container div {
+  display: flex;
+  flex-direction: column;
+  padding: 0 1rem;
+}
+
+.hero-heading {
+  color: rgb(9, 0, 65);
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-size: 1.5rem;
+}
+
+.hero-subheading {
+  font-size: 1rem;
+}
