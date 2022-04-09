@@ -10,7 +10,7 @@
 .hero-container div {
   display: flex;
   flex-direction: column;
-  padding: 0 1rem;
+  padding: 0.5rem;
 }
 
 .hero-heading {
