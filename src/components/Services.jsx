@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
+import "./styles/_services.css";
 
 function Services() {
   const [allServices, setAllServices] = useState("");
@@ -29,23 +30,17 @@ function Services() {
   };
 
   return (
-    <section>
-      <h2>SERVICES LIST</h2>
-      <div>
+    <section className="services-container">
+      <h2 className="services-heading">Our services</h2>
+      <div className="service-card-wrap">
         {allServices &&
           allServices.map((s) => (
-            <div
-              key={s.title}
-              style={{
-                border: "1px solid darkgrey",
-                padding: "1rem",
-              }}
-            >
-              <h3>{s.title}</h3>
+            <div className="service-card">
+              <h3 className="service-card-title">{s.title}</h3>
               <p>{s.description}</p>
-              <div>
-                <span>€{s.cost}</span>
-                <span> Duration: {s.duration}mins </span>
+              <div className="service-card-deets">
+                <span className="duration"> Duration: {s.duration}mins </span>
+                <span className="cost">€{s.cost}</span>
               </div>
               <button
                 id={s.duration}

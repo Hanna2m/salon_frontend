@@ -1,0 +1,29 @@
+.services-container {
+}
+
+.service-card-wrap {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.service-card {
+  border: 1px solid rgb(238, 238, 238);
+  border-radius: 10px;
+  padding: 1rem;
+  max-width: 20rem;
+}
+
+.services-heading {
+  font-size: 1.25rem;
+}
+
+.service-card-title {
+  font-size: 1.25rem;
+}
+
+.service-card-deets {
+  display: flex;
+  justify-content: space-between;
+}
