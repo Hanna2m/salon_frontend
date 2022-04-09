@@ -8,11 +8,13 @@ function HomepageHero() {
       <div>
         <h2 className="hero-heading">Welcome</h2>
         <h3 className="hero-subheading">
-          Local professional grooming service for your best friend. Our services
-          are listed below.
+          Your local professional grooming service for your best friend. Our
+          services are listed below.
         </h3>
       </div>
-      <img className="hero-image" src={heroImg} width="200px" />
+      <div>
+        <img className="hero-image" src={heroImg} width="200px" />
+      </div>
     </section>
   );
 }
