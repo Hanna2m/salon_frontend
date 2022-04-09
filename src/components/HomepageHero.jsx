@@ -1,5 +1,5 @@
 import React from "react";
-import "./_homepageHero.css";
+import "./styles/_homepageHero.css";
 import heroImg from "../assets/heroImg.jpg";
 
 function HomepageHero() {
