@@ -2,6 +2,8 @@ import React from "react";
 import { Link, Outlet, useLocation } from "react-router-dom";
 import AuthService from "../services/auth.service";
 
+import "./styles/_header.css";
+
 function Header() {
   const location = useLocation();
   const handleLogout = () => {
@@ -11,9 +13,9 @@ function Header() {
   const user = AuthService.getCurrentUser();
 
   return (
-    <>
+    <header>
       <h3>Happy Dogs</h3>
-      <nav>
+      <nav className="navbar">
         {user && (
           <div>
             <p>Hello, {user.userName} </p>
@@ -22,16 +24,25 @@ function Header() {
         )}
         {!user && (
           <div>
-            <Link to="/">Home</Link>
-            <Link to="/signup">Sign up</Link>
-            <Link to="/login" replace state={{ from: location }}>
+            <Link to="/" className="navbar-link">
+              Home
+            </Link>
+            <Link to="/signup" className="navbar-link">
+              Sign up
+            </Link>
+            <Link
+              to="/login"
+              replace
+              state={{ from: location }}
+              className="navbar-link"
+            >
               Log in
             </Link>
           </div>
         )}
       </nav>
       <Outlet />
-    </>
+    </header>
   );
 }
 

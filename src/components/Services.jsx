@@ -36,18 +36,24 @@ function Services() {
         {allServices &&
           allServices.map((s) => (
             <div className="service-card">
-              <h3 className="service-card-title">{s.title}</h3>
-              <p>{s.description}</p>
-              <div className="service-card-deets">
-                <span className="duration"> Duration: {s.duration}mins </span>
-                <span className="cost">€{s.cost}</span>
+              <div>
+                <h3 className="service-card-title">{s.title}</h3>
+                <p>{s.description}</p>
               </div>
-              <button
-                id={s.duration}
-                onClick={() => handleSelectService(s._id)}
-              >
-                Book now
-              </button>
+              <div>
+                <div className="service-card-deets">
+                  <span className="duration"> Duration: {s.duration}mins </span>
+                  <span className="cost">€{s.cost}</span>
+                </div>
+
+                <button
+                  className="btn-book"
+                  id={s.duration}
+                  onClick={() => handleSelectService(s._id)}
+                >
+                  Book now
+                </button>
+              </div>
             </div>
           ))}
       </div>
