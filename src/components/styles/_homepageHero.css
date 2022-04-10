@@ -1,16 +1,26 @@
+section {
+  width: 100%;
+}
+
 .hero-container {
   color: rgb(9, 0, 65);
   font-family: Verdana, Geneva, Tahoma, sans-serif;
   display: flex;
   flex-direction: row-reverse;
+  justify-content: center;
+  align-items: center;
   text-align: left;
   margin: 2rem 0;
+  padding: 1rem;
 }
 
-.hero-container div {
+.hero-copy {
   display: flex;
   flex-direction: column;
   padding: 0.5rem;
+  max-width: 20rem;
+  flex-basis: 60%;
+  margin-left: 2rem;
 }
 
 .hero-heading {
@@ -20,5 +30,16 @@
 }
 
 .hero-subheading {
-  font-size: 1rem;
+  font-size: 0.875rem;
+  max-width: 30ch;
+}
+
+.hero-image-container {
+  flex-basis: 50%;
+  max-width: 20rem;
+}
+
+.hero-image {
+  display: block;
+  width: 100%;
 }
