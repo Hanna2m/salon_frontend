@@ -34,8 +34,8 @@ function Services() {
       <h2 className="services-heading">Our services</h2>
       <div className="service-card-wrap">
         {allServices &&
-          allServices.map((s) => (
-            <div className="service-card">
+          allServices.map((s, i) => (
+            <div className="service-card" key={s.title}>
               <div>
                 <h3 className="service-card-title">{s.title}</h3>
                 <p>{s.description}</p>
