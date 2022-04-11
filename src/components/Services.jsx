@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
-import Button from "./Button";
+import "./styles/_services.css";
 
 function Services() {
   const [allServices, setAllServices] = useState("");
@@ -24,40 +24,36 @@ function Services() {
     }
   };
 
-  const handleSelectService = (e) => {
-    // console.log(e.target.id);
-    // console.log(`number of slots required ${e.target.id / 15}`);
-    let path = "/booking";
+  const handleSelectService = (id) => {
+    let path = `/booking/${id}`;
     navigate(path);
   };
 
   return (
-    <section>
-      <h2>SERVICES LIST</h2>
-      <div
-      // style={{
-      //   display: "flex",
-      //   border: "1px solid red",
-      // }}
-      >
+    <section className="services-container">
+      <h2 className="services-heading">Our services</h2>
+      <div className="service-card-wrap">
         {allServices &&
           allServices.map((s) => (
-            <div
-              key={s.title}
-              style={{
-                border: "1px solid darkgrey",
-                padding: "1rem",
-              }}
-            >
-              <h3>{s.title}</h3>
-              <p>{s.description}</p>
+            <div className="service-card">
               <div>
-                <span>€{s.cost}</span>
-                <span> Duration: {s.duration}mins </span>
+                <h3 className="service-card-title">{s.title}</h3>
+                <p>{s.description}</p>
               </div>
-              <button id={s.duration} onClick={handleSelectService}>
-                Book now
-              </button>
+              <div>
+                <div className="service-card-deets">
+                  <span className="duration"> Duration: {s.duration}mins </span>
+                  <span className="cost">€{s.cost}</span>
+                </div>
+
+                <button
+                  className="btn-book"
+                  id={s.duration}
+                  onClick={() => handleSelectService(s._id)}
+                >
+                  Book now
+                </button>
+              </div>
             </div>
           ))}
       </div>

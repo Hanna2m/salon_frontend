@@ -21,9 +21,8 @@ render(
       <Route path="services" element={<ServicesConfig />}></Route>
       <Route path="dashboard" element={<Dashboard />}></Route>
       <Route path="customers" element={<Customers />}></Route>
-      <Route path=":customerId" element={<SelectedCustomer />}>
-      </Route>
-      <Route path="booking" element={<Booking />}></Route>
+      <Route path=":customerId" element={<SelectedCustomer />}></Route>
+      <Route path="booking/:serviceId" element={<Booking />}></Route>
     </Routes>
   </BrowserRouter>,
   rootElement

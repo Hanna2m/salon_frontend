@@ -8,9 +8,6 @@ function Booking() {
   return (
     <section>
       <Header />
-      <section>
-        <ServiceSummary />
-      </section>
       <NewBookingDate />
     </section>
   );

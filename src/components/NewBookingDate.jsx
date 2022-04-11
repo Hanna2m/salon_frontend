@@ -1,25 +1,46 @@
-// NEW BOOKING DATE
-
 import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import parseISO from "date-fns/parseISO";
-
-// datepicker css file
-import "react-datepicker/dist/react-datepicker.css";
+import { useParams } from "react-router-dom";
 import axios from "axios";
+import "react-datepicker/dist/react-datepicker.css";
+
+import DogDetails from "./DogDetails";
+import ServiceSummary from "./ServiceSummary";
 
 function NewBookingDate() {
+  const { serviceId } = useParams();
   const [startDate, setStartDate] = useState(new Date());
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
+  const [selectedService, setSelectedService] = useState({});
+
+  const params = useParams();
+  const id = params.serviceId;
+
+  const API_URL = `https://groomer-server.herokuapp.com/service/${id}`;
 
   useEffect(() => {
     getTimeSlots();
     setStartDate(new Date());
+    // console.log("serviceID: ", id);
+    getSelectedServiceData();
   }, []);
 
   useEffect(() => {
     getTimeSlots();
   }, [startDate]);
+
+  const getSelectedServiceData = async () => {
+    try {
+      await axios.get(API_URL).then((res) => {
+        let data = res.data;
+        // console.log(data);
+        setSelectedService(data);
+      });
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
 
   const handleDateChange = (date) => {
     setAvailableTimeSlots([]);
@@ -40,9 +61,9 @@ function NewBookingDate() {
 
   const getTimeSlots = async () => {
     try {
-      await axios.get("appointments.json").then((response) => {
+      await axios.get("https://groomer-server.herokuapp.com/day").then((response) => {
         let data = response.data;
-
+        // console.log(response.data);
         for (let i = 0; i < data.length; i++) {
           if (new Date(data[i].date).valueOf() === startDate.valueOf()) {
             if (data[i].isAvailable === true) {
@@ -60,34 +81,43 @@ function NewBookingDate() {
   };
 
   return (
-    <section>
-      <h3>Make Appointment</h3>
-      <div>
-        <h4>Select Date:</h4>
-        <DatePicker
-          minDate={new Date()}
-          selected={startDate}
-          onChange={handleDateChange}
-          dateFormat="YYYY-MM-DD"
-          shouldCloseOnSelect={false}
-          inline
-        />
-      </div>
+    <div>
+      <section>
+        <ServiceSummary selectedService={selectedService} />
+      </section>
+      <section>
+        <DogDetails />
+      </section>
 
       <section>
-        {!availableTimeSlots ? (
-          <h2>Loading ..</h2>
-        ) : (
-          <div>
-            {availableTimeSlots.length > 0 ? (
-              availableTimeSlots.map((t, i) => <button key={i}>{t}</button>)
-            ) : (
-              <h4>No available appointments for selected date</h4>
-            )}
-          </div>
-        )}
+        <h3>Make Appointment</h3>
+        <div>
+          <h4>Select Date:</h4>
+          <DatePicker
+            minDate={new Date()}
+            selected={startDate}
+            onChange={handleDateChange}
+            dateFormat="YYYY-MM-DD"
+            shouldCloseOnSelect={false}
+            inline
+          />
+        </div>
+
+        <section>
+          {!availableTimeSlots ? (
+            <h2>Loading ..</h2>
+          ) : (
+            <div>
+              {availableTimeSlots.length > 0 ? (
+                availableTimeSlots.map((t, i) => <button key={i}>{t}</button>)
+              ) : (
+                <h4>No available appointments for selected date</h4>
+              )}
+            </div>
+          )}
+        </section>
       </section>
-    </section>
+    </div>
   );
 }
 
