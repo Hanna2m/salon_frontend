@@ -22,10 +22,10 @@ const fetchUsers = async () => {
 }
 
 function Signup() {
-  // const API_URL = "https://groomer-server.herokuapp.com/";
+  const API_URL = "https://groomer-server.herokuapp.com/";
   const location = useLocation();
   const navigate = useNavigate();
-  const API_URL = "http://Localhost:3080/";
+  // const API_URL = "http://Localhost:3080/";
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .required('Name is required'),

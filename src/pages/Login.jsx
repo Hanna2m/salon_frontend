@@ -15,6 +15,7 @@ function Login() {
     console.log(email, password);
     AuthService.login(email, password);
 
+    
     setTimeout(() => {
       console.log(AuthService.getCurrentUser());
       user = AuthService.getCurrentUser();
