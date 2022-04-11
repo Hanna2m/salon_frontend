@@ -11,14 +11,14 @@ function Header() {
     window.location = "/";
   };
   const user = AuthService.getCurrentUser();
-
+  
   return (
     <header>
       <h3>Happy Dogs</h3>
       <nav className="navbar">
         {user && (
           <div>
-            <p>Hello, {user.userName} </p>
+            <p>Hello, {user.name} </p>
             <button onClick={handleLogout}>Log out</button>
           </div>
         )}
@@ -27,13 +27,15 @@ function Header() {
             <Link to="/" className="navbar-link">
               Home
             </Link>
-            <Link to="/signup" className="navbar-link">
+            <Link 
+              to="/signup"
+              replace state={{ from: location }}
+              className="navbar-link">
               Sign up
             </Link>
             <Link
               to="/login"
-              replace
-              state={{ from: location }}
+              replace state={{ from: location }}
               className="navbar-link"
             >
               Log in

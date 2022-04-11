@@ -6,7 +6,6 @@ import AuthService from "../services/auth.service";
 function Login() {
   const [email, setEmail] = useState();
   const [password, setPassword] = useState();
-  const [token, setToken] = useState();
   const location = useLocation();
   const navigate = useNavigate();
   let user = {};
@@ -16,6 +15,7 @@ function Login() {
     console.log(email, password);
     AuthService.login(email, password);
 
+    
     setTimeout(() => {
       console.log(AuthService.getCurrentUser());
       user = AuthService.getCurrentUser();
@@ -26,7 +26,7 @@ function Login() {
           navigate(location.state.from);
         }
       }
-    }, 500);
+    }, 3000);
   };
 
   return (
