@@ -18,7 +18,7 @@ function AdminCalendar() {
       await axios
         .get("https://groomer-server.herokuapp.com/appointment")
         .then((response) => {
-          console.log(response.data);
+          // console.log(response.data);
           setAppointments(response.data);
         });
     } catch (error) {
@@ -26,19 +26,10 @@ function AdminCalendar() {
     }
   };
 
-  //   const events = [
-  //     {
-  //       title: "Wash",
-  //       start: moment("2022-04-15T09:00:00.000Z").toDate(),
-  //       end: moment("2022-04-15T09:30:00.000Z").toDate(),
-  //       allDay: false,
-  //     },
-  //   ];
-
   const convertStartDateTime = (date, time) => {
     let newStartDate = moment.utc(date).toISOString();
 
-    newStartDate = newStartDate.replace("T00:00", `T${time}`);
+    newStartDate = newStartDate.replace("T00:00:00.000Z", `T${time}:00+02:00`);
 
     return newStartDate;
   };
@@ -54,7 +45,6 @@ function AdminCalendar() {
       start: new Date(
         convertStartDateTime(appointment.day.date, appointment.time.startTime)
       ),
-
       end: new Date(
         convertEndDateTime(
           convertStartDateTime(
