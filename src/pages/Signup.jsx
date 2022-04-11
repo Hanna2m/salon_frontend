@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import Header from "../components/Header";
 import { ToastContainer, toast } from "react-toastify";
 import { injectStyle } from "react-toastify/dist/inject-style";
+import { useState } from "react";
 
 if (typeof window !== "undefined") {
   injectStyle();
@@ -24,6 +25,7 @@ function Signup() {
   const API_URL = "https://groomer-server.herokuapp.com/";
   const location = useLocation();
   const navigate = useNavigate();
+  const [chosenRole, setChosenRole]=useState();
   // const API_URL = "http://Localhost:3080/";
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -55,10 +57,11 @@ function Signup() {
 
   const onSubmit = async() => {
     const values = getValues()
-    signup(values.name, values.email, values.password, values.role)
+    signup(values.name, values.email, values.password, values.role, values.dog, values.size, values.hair)
+    console.log('6', values.dog, values.size, values.hair)
   };
 
-  const signup = async (name, email, password, role) => {
+  const signup = async (name, email, password, role, dog, size, hair) => {
     const ifUserUnique = await isUnique(email);
     console.log('3', ifUserUnique);
     if (ifUserUnique){
@@ -77,9 +80,12 @@ function Signup() {
       if (role === "admin") {
         window.location = "/dashboard"
       } else {
-        console.log(6, location.state?.from)
+        //create customer profile:
+        addNewCustomer(name, email, dog, size, hair);
         if (location.state?.from) {
           navigate(location.state.from);
+        } else {
+          window.location = "/"
         }
       }
 
@@ -97,6 +103,23 @@ function Signup() {
         if (result) {return false}
       }
       return true;
+    }
+
+  const addNewCustomer = async(name, email, dog, size, hair) => {
+    const dogs = [{dog, size, hair}];
+    const phone = '';
+    console.log('7', { dog, size, hair})
+    console.log(API_URL+'customer')
+      try {
+        await axios.post('https://groomer-server.herokuapp.com/customer', { name, email, dogs})
+        .then((res) => console.log("POST", res.data))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+
+    const changeRoleValue = (e) => { 
+      setChosenRole(e.target.value);
     }
    
   return (
@@ -156,19 +179,80 @@ function Signup() {
         <div className="form-group">
           <label htmlFor="role">Role</label>
           <input
-            name="role"
-            list="roles"
-            type="text"
-              {...register('role')}
+              name="role"
+              list="roles"
+              type="text"
+              {...register("role")}
+              onChange={(e) => changeRoleValue(e)}
               className={`form-control ${errors.role ? 'is-invalid' : ''}`}
                 />
-              <div className="invalid-feedback">
+            <div className="invalid-feedback">
               {errors.confirmPassword?.message}
-              </div>
+            </div>
           <datalist id="roles">
             <option value="Customer" />
             <option value="Admin" />
           </datalist>
+        </div>
+        
+        <div> {/* for Customer role adding dogs info */}
+          {chosenRole === 'Customer' &&
+          <>
+          <div className="form-group">
+            <label htmlFor="dog">Dogs Name</label>
+            <input name="dog"
+              type="text"
+              {...register('dog')}
+              className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+              />
+            <div className="invalid-feedback">
+              {errors.name?.message}
+            </div>
+          </div>
+          <div className="form-group">
+            <label htmlFor="size">Dogs Size</label>
+            <input name="size"
+              list="size"
+              type="text"
+              {...register('size')}
+              className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+              />
+            <div className="invalid-feedback">
+              {errors.name?.message}
+            </div>
+            <datalist id="size">
+              <option value="small (up to 10 kg)" />
+              <option value="medium (11-20 kg)" />
+              <option value="large (more than 20 kg)" />
+            </datalist>
+          </div>
+          <div className="form-group">
+            <p>Dog's hair</p>
+            <div>
+              <label htmlFor="short">Short</label>
+              <input
+                type="radio"
+                name="hair"
+                id="short"
+                value="short"
+                {...register('hair')}
+                className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+              />
+            </div>
+            <div>
+              <label htmlFor="long">Long</label>
+              <input
+                type="radio"
+                name="hair"
+                id="long"
+                value="long"
+                {...register('hair')}
+                className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+              />
+            </div>
+          </div>
+        </>}
+
         </div>
         <div className="form-group form-check">
           <input
