@@ -1,13 +1,42 @@
 // import { Button } from "@material-ui/core";
 import React, { useState } from "react";
-
+import axios from "axios";
 import Button from "./Button";
+import AuthService from "../services/auth.service"
+import { useEffect } from "react";
+
+const fetchUsers = async () => {
+  try {
+    const {data} = await axios.get('https://groomer-server.herokuapp.com/user')
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
+
+const fetchCustomers = async () => {
+  try {
+    const {data} = await axios.get('https://groomer-server.herokuapp.com/customer')
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
 function DogDetails() {
   const [size, setSize] = useState("");
   const [hair, setHair] = useState("");
   const [dogName, setDogName] = useState("");
+  let {user} = {};
 
+  //check if user is logged in
+  useEffect(async ()=>{
+    user = await AuthService.getCurrentUser();
+    const token = user.token;
+    console.log('1', token)
+    
+  }, [])
+  
   const handleConfirm = (e) => {
     e.preventDefault();
 
