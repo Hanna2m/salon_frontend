@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../components/Header";
+import { Button } from "@material-ui/core";
 
 function ServicesConfig() {
   const [serviceTitle, setServiceTitle] = useState("");
@@ -18,6 +19,7 @@ function ServicesConfig() {
     try {
       await axios.get(API_URL).then((res) => {
         setAllServices(res.data);
+        // console.log(allServices);
       });
     } catch (error) {
       console.log(error.message);
@@ -26,19 +28,28 @@ function ServicesConfig() {
 
   const addNewService = async (e) => {
     e.preventDefault();
-
     try {
       await axios
-        .post(API_URL+"create-service", {
+        .post(API_URL + "create-service", {
           title: serviceTitle,
           description: serviceDescription,
           cost: serviceCost,
           duration: serviceDuration,
         })
-        .then((res) => console.log("POST", serviceTitle));
+        .then((res) => res.redirect("/service"));
     } catch (error) {
       console.log(error.message);
     }
+  };
+
+  const deleteService = (id) => {
+    axios.delete(API_URL + id).then(() =>
+      setAllServices(
+        allServices.filter((val) => {
+          return val._id != id;
+        })
+      )
+    );
   };
 
   return (
@@ -83,12 +94,19 @@ function ServicesConfig() {
         <ul>
           {allServices &&
             allServices.map((s) => (
-              <div>
+              <div key={s.title}>
                 <h4>Title: {s.title}</h4>
                 <p>
                   {s.description} <span>€{s.cost} </span>
                   <span>Duration: {s.duration}mins </span>
                 </p>
+                <button
+                  onClick={() => {
+                    deleteService(s._id);
+                  }}
+                >
+                  Delete
+                </button>
               </div>
             ))}
         </ul>
