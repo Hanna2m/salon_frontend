@@ -1,44 +1,33 @@
 import axios from "axios";
-import {useState} from "react"
 
-const API_URL = "http://localhost:3080/";
-
-
-
-// const signup = async (name, email, password, role) => {
-//   console.log(name, email, password, role)
-//   console.log(IsUnique(email))
-  // if (IsUnique(email) === true){
-  //   try {
-  //       await axios
-  //       .post(API_URL+"signup", {
-  //         name, email, password, role
-  //       })
-  //     .then((res) => console.log(res.data))
-  //     } catch (error) {
-  //       console.log(error)
-  //     }
-  // } else {
-  //   console.log( "Email is already registered")
-  //   return "Email is already registered"}
-    
-// }
+const API_URL = "https://groomer-server.herokuapp.com/";
 
 const login = async (email, password) => {
-    try {
-        const res = await axios({
-        method: 'POST',
-        url: API_URL+"login",
-        data: JSON.stringify({
-          email, password
-        }),
-        headers: {'Content-Type': 'application/json'}
-      })
-      if(res.data.token) {
-        localStorage.setItem("user", JSON.stringify(res.data))
-      }
-      return res.data
-      } catch (error) {
+
+
+  let {user} ={};
+    try {await 
+        axios
+        .post(API_URL+"login", {email, password})
+        .then(res =>  {
+          if(res.data.token) {
+            localStorage.setItem("user", JSON.stringify(res.data))
+            localStorage.getItem("user")
+            user = JSON.parse(localStorage.getItem("user"));
+            console.log('1', user)
+            // console.log('2', localStorage.getItem("user").role)
+            if (user.role === "admin") {
+              window.location = "/dashboard";
+            } 
+            // else {
+            //   if (location.state?.from) {
+            //     navigate(location.state.from);
+            //         }
+            //   }
+            }
+          return res.data
+          })
+       } catch (error) {
         console.log(error)
     };
 };
@@ -57,6 +46,13 @@ const logout = () => {
 }
 
 const getCurrentUser = () => {
+  // try {
+  //   const data = AsyncLocalStorage.getItem('user');
+  //   return data;
+  // } catch(e) {
+  //   console.log(e)
+  // }
+  
    return(JSON.parse(localStorage.getItem("user"))) ;
    
   };
