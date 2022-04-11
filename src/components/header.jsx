@@ -9,6 +9,7 @@ function Header() {
     window.location = "/";
   };
   const user = AuthService.getCurrentUser();
+  console.log(user)
 
   return (
     <>
@@ -16,14 +17,14 @@ function Header() {
       <nav>
         {user && (
           <div>
-            <p>Hello, {user.userName} </p>
+            <p>Hello, {user.name} </p>
             <button onClick={handleLogout}>Log out</button>
           </div>
         )}
         {!user && (
           <div>
             <Link to="/">Home</Link>
-            <Link to="/signup">Sign up</Link>
+            <Link to="/signup" replace state={{ from: location }}>Sign up</Link>
             <Link to="/login" replace state={{ from: location }}>
               Log in
             </Link>

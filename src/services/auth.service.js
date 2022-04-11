@@ -1,26 +1,32 @@
 import axios from "axios";
+import {useState} from "react"
 
-const API_URL = "https://groomer-server.herokuapp.com/";
+const API_URL = "http://localhost:3080/";
 
-const signup = async (name, email, password, role) => {
-    try {
-        await axios({
-        method: 'POST',
-        url: API_URL+"signup",
-        data: JSON.stringify({
-          name, email, password, role
-        }),
-        headers: {'Content-Type': 'application/json'}
-      })
-      .then((res) => console.log(res.data))
-      } catch (error) {
-        console.log(error)
-      }
-}
+
+
+// const signup = async (name, email, password, role) => {
+//   console.log(name, email, password, role)
+//   console.log(IsUnique(email))
+  // if (IsUnique(email) === true){
+  //   try {
+  //       await axios
+  //       .post(API_URL+"signup", {
+  //         name, email, password, role
+  //       })
+  //     .then((res) => console.log(res.data))
+  //     } catch (error) {
+  //       console.log(error)
+  //     }
+  // } else {
+  //   console.log( "Email is already registered")
+  //   return "Email is already registered"}
+    
+// }
 
 const login = async (email, password) => {
     try {
-        await axios({
+        const res = await axios({
         method: 'POST',
         url: API_URL+"login",
         data: JSON.stringify({
@@ -28,12 +34,10 @@ const login = async (email, password) => {
         }),
         headers: {'Content-Type': 'application/json'}
       })
-      .then((res) => {
-         if(res.data.token) {
-             localStorage.setItem("user", JSON.stringify(res.data))
-        }
-        return res.data
-      });
+      if(res.data.token) {
+        localStorage.setItem("user", JSON.stringify(res.data))
+      }
+      return res.data
       } catch (error) {
         console.log(error)
     };
@@ -56,13 +60,34 @@ const getCurrentUser = () => {
    return(JSON.parse(localStorage.getItem("user"))) ;
    
   };
+
 const AuthService = {
-    signup,
+    // signup,
     login,
     logout,
     getCurrentUser
 };
 
-export default AuthService;
+export default AuthService
+
+// export const IsUnique = email => {
+//   const [users, setUsers] = useState();
+//     const getAllUsers = async () => {
+//       try {
+//         await axios.get('https://groomer-server.herokuapp.com/user')
+//         .then((res) => {
+//           console.log(res.data)
+//           return(res.data)
+//         });
+//       } catch (error) {
+//         console.log(error.message);
+//       }
+//       setUsers(getAllUsers());
+//       if (!users) {return "Loading..."} else {
+//         console.log(users.email)
+//         const result = users.email.find(element => element === email)
+//         if (result) {return false}
+//       }
+//   }}
 
 

@@ -1,17 +1,31 @@
 import axios from "axios";
 import React, { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useForm, Controller } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
 import Header from "../components/Header";
+import { ToastContainer, toast } from "react-toastify";
+import { injectStyle } from "react-toastify/dist/inject-style";
+
+if (typeof window !== "undefined") {
+  injectStyle();
+}
+
+const fetchUsers = async () => {
+  try {
+    const {data} = await axios.get('https://groomer-server.herokuapp.com/user')
+    return data;
+  } catch (error) {
+    console.log(error.message);
+  }
+}
 
 function Signup() {
-  const [name, setName] = useState();
-  const [email, setEmail] = useState();
-  const [password, setPassword] = useState();
-  const [role, setRole] = useState();
-  const API_URL = "https://groomer-server.herokuapp.com/user";
-
+  // const API_URL = "https://groomer-server.herokuapp.com/";
+  const location = useLocation();
+  const navigate = useNavigate();
+  const API_URL = "http://Localhost:3080/";
   const validationSchema = Yup.object().shape({
     name: Yup.string()
       .required('Name is required'),
@@ -29,29 +43,63 @@ function Signup() {
       .required('Role is required'),
     acceptTerms: Yup.bool().oneOf([true], 'Accept Terms is required')
   });
+
   const {
     register,
     handleSubmit,
-    watch,
     reset,
-    formState: { errors }
+    formState: { errors },
+    getValues
   } = useForm({
     resolver: yupResolver(validationSchema)
   })
 
-  useEffect(() => {
-    register({name: 'email', type: 'custom'}, {validate: { isUnique }})
-  }, [])
+  const onSubmit = async() => {
+    const values = getValues()
+    signup(values.name, values.email, values.password, values.role)
+  };
 
-  const isUnique = email => {
+  const signup = async (name, email, password, role) => {
+    const ifUserUnique = await isUnique(email);
+    console.log('3', ifUserUnique);
+    if (ifUserUnique){
+      console.log('4', name, email, password, role)
+      try {await 
+        axios.post(API_URL+"signup", {
+            name, email, password, role
+          })
+        .then (res => {
+          console.log('5', res.data.token)
+          localStorage.setItem("user", JSON.stringify(res.data))
+        })
+        } catch (error) {
+          console.log(error)
+        }
+      if (role === "admin") {
+        window.location = "/dashboard"
+      } else {
+        console.log(6, location.state?.from)
+        if (location.state?.from) {
+          navigate(location.state.from);
+        }
+      }
 
+    } else {
+      console.log( "Email is already registered");
+      toast.dark("Email is already registered!");
+      reset();}
   }
 
-  const onSubmit = async (e) => {
-    e.preventDefault();
-    console.log(name, email, password, role);
-
-  };
+  const isUnique = async(email) => {
+    const users = await fetchUsers();
+    console.log('1', users)
+    if(users) {
+        const result = users.find(element => element.email === email)
+        if (result) {return false}
+      }
+      return true;
+    }
+   
   return (
     <div>
       <Header />
@@ -61,7 +109,6 @@ function Signup() {
         <div className="form-group">
           <label htmlFor="name">Name</label>
           <input name="name"
-            onChange={(e) => setName(e.target.value)} 
             type="text"
             {...register('name')}
             className={`form-control ${errors.name ? 'is-invalid' : ''}`}
@@ -73,7 +120,6 @@ function Signup() {
         <div className="form-group">
           <label htmlFor="email">Email</label>
           <input name="email" 
-            onChange={(e) => setEmail(e.target.value)}
             type="text"
             {...register('email')}
             className={`form-control ${errors.email ? 'is-invalid' : ''}`}
@@ -86,7 +132,6 @@ function Signup() {
           <label htmlFor="password">Password</label>
           <input
             name="password"
-            onChange={(e) => setPassword(e.target.value)}
             type="password"
             {...register('password')}
               className={`form-control ${errors.password ? 'is-invalid' : ''}`}
@@ -114,7 +159,6 @@ function Signup() {
           <input
             name="role"
             list="roles"
-            onChange={(e) => setRole(e.target.value)}
             type="text"
               {...register('role')}
               className={`form-control ${errors.role ? 'is-invalid' : ''}`}
@@ -153,6 +197,7 @@ function Signup() {
         </div>
       </form>
       </div>
+      <ToastContainer position="top-center"/>
     </div>
   );
 }
