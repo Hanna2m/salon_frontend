@@ -6,6 +6,7 @@ import * as Yup from 'yup';
 import Header from "../components/Header";
 import { ToastContainer, toast } from "react-toastify";
 import { injectStyle } from "react-toastify/dist/inject-style";
+import { useState } from "react";
 
 if (typeof window !== "undefined") {
   injectStyle();
@@ -24,6 +25,7 @@ function Signup() {
   const API_URL = "https://groomer-server.herokuapp.com/";
   const location = useLocation();
   const navigate = useNavigate();
+  const [roleValue, setRoleValue]=useState();
   // const API_URL = "http://Localhost:3080/";
   const validationSchema = Yup.object().shape({
     name: Yup.string()
@@ -77,9 +79,12 @@ function Signup() {
       if (role === "admin") {
         window.location = "/dashboard"
       } else {
-        console.log(6, location.state?.from)
+        //create customer profile:
+        addNewCustomer(name, email);
         if (location.state?.from) {
           navigate(location.state.from);
+        } else {
+          window.location = "/"
         }
       }
 
@@ -98,6 +103,24 @@ function Signup() {
       }
       return true;
     }
+
+  const addNewCustomer = async(name, email) => {
+      try {
+        await axios.post(API_URL+'customer', { name, email})
+        .then((res) => console.log("POST", res.data))
+      } catch (error) {
+        console.log(error)
+      }
+    }
+    const changeRoleValue = () => { 
+      const roleValue = getValues();
+      console.log("test",roleValue)
+      console.log(getValues().role)
+      // setRoleValue(roleValue);
+    }
+
+
+    console.log("role value outside",roleValue)
    
   return (
     <div>
@@ -159,16 +182,31 @@ function Signup() {
             name="role"
             list="roles"
             type="text"
-              {...register('role')}
+            {...register('role')}
+            onClick={()=>changeRoleValue()}
               className={`form-control ${errors.role ? 'is-invalid' : ''}`}
                 />
-              <div className="invalid-feedback">
+            <div className="invalid-feedback">
               {errors.confirmPassword?.message}
-              </div>
+            </div>
           <datalist id="roles">
             <option value="Customer" />
             <option value="Admin" />
           </datalist>
+        </div>
+        <div>
+          {roleValue === 'Customer' &&
+          <div className="form-group">
+            <label htmlFor="dogsName">Dogs Name</label>
+            <input name="dogsName"
+              type="text"
+              {...register('name')}
+              className={`form-control ${errors.name ? 'is-invalid' : ''}`}
+              />
+            <div className="invalid-feedback">
+              {errors.name?.message}
+            </div>
+          </div>}
         </div>
         <div className="form-group form-check">
           <input

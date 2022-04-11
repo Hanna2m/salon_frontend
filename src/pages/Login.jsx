@@ -1,12 +1,9 @@
-import React, { useState } from "react";
+import React from "react";
 import axios from "axios";
 import { useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
-import Header from "../components/Header";
-import AuthService from "../services/auth.service";
-import AsyncLocalStorage from '@createnextapp/async-local-storage'
 
 function Login() {
   const navigate = useNavigate();
@@ -42,6 +39,7 @@ function Login() {
           .post(API_URL+"login", {email, password})
           .then(res =>  {
             if(res.data.token) {
+              document.cookie = `token=${res.data.token}`
               localStorage.setItem("user", JSON.stringify(res.data))
               localStorage.getItem("user")
               user = JSON.parse(localStorage.getItem("user"));
@@ -53,35 +51,15 @@ function Login() {
               else {
                 if (location.state?.from) {
                   navigate(location.state.from);
-                      }
                 }
               }
+            }
             return res.data
             })
          } catch (error) {
           console.log(error)
       };
   };
-
-
-  // const handleSubmit = async (e) => {
-  //   e.preventDefault();
-  //   console.log(email, password);
-  //   AuthService.login(email, password);
-
-    
-  //   setTimeout(() => {
-  //     console.log(AuthService.getCurrentUser());
-  //     user = AuthService.getCurrentUser();
-  //     if (user.role === "admin") {
-  //       window.location = "/dashboard";
-  //     } else {
-  //       if (location.state?.from) {
-  //         navigate(location.state.from);
-  //       }
-  //     }
-  //   }, 3000);
-  // };
 
   return (
     <div>
