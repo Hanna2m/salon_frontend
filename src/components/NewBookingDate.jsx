@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -27,12 +27,16 @@ const getWorkTimes = async () => {
 
 function NewBookingDate() {
   const { serviceId } = useParams();
-  let startDate = new Date();
   const params = useParams();
   const id = params.serviceId;
+  let startDate = new Date();
   const [selectedService, setSelectedService] = useState({});
   let workingHours = [];
   const API_URL = `https://groomer-server.herokuapp.com/service/${id}`;
+
+  useEffect(() => {
+    getSelectedServiceData();
+  }, []);
 
   const handleDateChange = (date) => {
     const pickerDate = new Date(date);
