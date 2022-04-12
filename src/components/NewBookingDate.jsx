@@ -1,6 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect } from "react";
+import useState from 'react-usestateref';
 import DatePicker from "react-datepicker";
-import parseISO from "date-fns/parseISO";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
@@ -8,33 +8,69 @@ import "react-datepicker/dist/react-datepicker.css";
 import DogDetails from "./DogDetails";
 import ServiceSummary from "./ServiceSummary";
 
+const getAllDates = async () => {    
+  try {
+    const dates = await axios.get("https://groomer-server.herokuapp.com/day")
+    return dates
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const getWorkTimes = async () => {
+  try {
+    const time = await axios.get("https://groomer-server.herokuapp.com/time")
+    return time
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 function NewBookingDate() {
   const { serviceId } = useParams();
-  const [startDate, setStartDate] = useState(new Date());
-  const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
-  const [selectedService, setSelectedService] = useState({});
-
+  let startDate = new Date()
   const params = useParams();
   const id = params.serviceId;
-
+  const [selectedService, setSelectedService] = useState({});
+  let workingHours = [];
   const API_URL = `https://groomer-server.herokuapp.com/service/${id}`;
 
-  useEffect(() => {
-    getTimeSlots();
-    setStartDate(new Date());
-    // console.log("serviceID: ", id);
-    getSelectedServiceData();
-  }, []);
+  const handleDateChange = (date) => {
+    const pickerDate = new Date(date)
+    startDate = (pickerDate.setHours(0,0,0,0))
+    console.log('1', startDate) 
+    fetchDaySchedul(pickerDate);
+  };
 
-  useEffect(() => {
-    getTimeSlots();
-  }, [startDate]);
+  const fetchDaySchedul = async (date) => {
+    console.log('2', date)
+    const scheduledDay = new Date(date).setHours(0,0,0,0)
+    console.log('2', scheduledDay)
+    const days = (await getAllDates()).data
+    for (let i = 0; i < days.length; i++) { 
+      days[i].date = new Date(days[i].date).setHours(0,0,0,0)
+    }
+    console.log('3', days)
+    let day = days.filter(item => {return (item.date === scheduledDay)})
+    const busyHours = day[0].time
+    console.log('4', busyHours)
+    workingHours = (await getWorkTimes()).data
+    console.log(workingHours.length, busyHours.length)
+    for (let i = 0; i < workingHours.length; i++){
+      for (let j = 0; j < busyHours.length; j++){
+        if (workingHours[i].startTime === busyHours[j].startTime) {
+          workingHours.splice(i, 1)
+        }
+      }
+    }
+    console.log('5', workingHours)
+  }
+
 
   const getSelectedServiceData = async () => {
     try {
       await axios.get(API_URL).then((res) => {
         let data = res.data;
-        // console.log(data);
         setSelectedService(data);
       });
     } catch (error) {
@@ -42,44 +78,7 @@ function NewBookingDate() {
     }
   };
 
-  const handleDateChange = (date) => {
-    setAvailableTimeSlots([]);
-    let dt = new Date(date);
-    let dd = dt.getDate();
-    let mm = dt.getMonth() + 1;
-    let yyyy = dt.getFullYear();
-    if (dd < 10) {
-      dd = "0" + dd;
-    }
-    if (mm < 10) {
-      mm = "0" + mm;
-    }
-    let newDate = yyyy + "-" + mm + "-" + dd;
-    setStartDate(parseISO(newDate));
-    return yyyy + "-" + mm + "-" + dd;
-  };
-
-  const getTimeSlots = async () => {
-    try {
-      await axios.get("https://groomer-server.herokuapp.com/day").then((response) => {
-        let data = response.data;
-        // console.log(response.data);
-        for (let i = 0; i < data.length; i++) {
-          if (new Date(data[i].date).valueOf() === startDate.valueOf()) {
-            if (data[i].isAvailable === true) {
-              setAvailableTimeSlots((availableTimeSlots) => [
-                ...availableTimeSlots,
-                data[i].startTime,
-              ]);
-            }
-          }
-        }
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-
+  
   return (
     <div>
       <section>
@@ -95,27 +94,28 @@ function NewBookingDate() {
           <h4>Select Date:</h4>
           <DatePicker
             minDate={new Date()}
-            selected={startDate}
+            // selected={startDate}
             onChange={handleDateChange}
-            dateFormat="YYYY-MM-DD"
+            dateFormat="dddd, MMMM Do YYYY, h:mm:ss a"
             shouldCloseOnSelect={false}
             inline
           />
         </div>
 
         <section>
-          {!availableTimeSlots ? (
+          {/* {!dayScheduleRef.current ? (
             <h2>Loading ..</h2>
           ) : (
             <div>
-              {availableTimeSlots.length > 0 ? (
-                availableTimeSlots.map((t, i) => <button key={i}>{t}</button>)
+              {dayScheduleRef.current.length > 0 ? (
+                // daySchedule.map((t, i) => <button key={i}>{t}</button>)
+                dayScheduleRef.current.map(day => <h4 key={day.startTime}>{day.startTime}</h4>)
               ) : (
                 <h4>No available appointments for selected date</h4>
               )}
             </div>
-          )}
-        </section>
+          )}*/}
+        </section> 
       </section>
     </div>
   );

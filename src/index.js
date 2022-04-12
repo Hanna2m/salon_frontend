@@ -3,6 +3,7 @@ import ReactDOM from "react-dom";
 import { render } from "react-dom";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import App from "./App";
+import { AuthProvider } from "./context/AuthProvider";
 import Customers from "./pages/Customers";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
@@ -13,17 +14,14 @@ import SelectedCustomer from "./pages/SelectedCustomer";
 
 const rootElement = document.getElementById("root");
 render(
-  <BrowserRouter>
-    <Routes>
-      <Route path="/" element={<App />}></Route>
-      <Route path="signup" element={<Signup />}></Route>
-      <Route path="login" element={<Login />}></Route>
-      <Route path="services" element={<ServicesConfig />}></Route>
-      <Route path="dashboard" element={<Dashboard />}></Route>
-      <Route path="customers" element={<Customers />}></Route>
-      <Route path=":customerId" element={<SelectedCustomer />}></Route>
-      <Route path="booking/:serviceId" element={<Booking />}></Route>
-    </Routes>
-  </BrowserRouter>,
+  <React.StrictMode>
+    <BrowserRouter>
+      <AuthProvider>
+        <Routes>
+          <Route path="/*" element={<App />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+  </React.StrictMode>,
   rootElement
 );
