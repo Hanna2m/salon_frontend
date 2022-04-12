@@ -4,15 +4,7 @@ import axios from "axios";
 import Button from "./Button";
 import AuthService from "../services/auth.service"
 import { useEffect } from "react";
-
-const fetchUsers = async () => {
-  try {
-    const {data} = await axios.get('https://groomer-server.herokuapp.com/user')
-    return data;
-  } catch (error) {
-    console.log(error.message);
-  }
-}
+import jwt_decode from 'jwt-decode';
 
 const fetchCustomers = async () => {
   try {
@@ -27,16 +19,35 @@ function DogDetails() {
   const [size, setSize] = useState("");
   const [hair, setHair] = useState("");
   const [dogName, setDogName] = useState("");
-  let {user} = {};
+  let customer = {};
 
   //check if user is logged in
   useEffect(async ()=>{
-    user = await AuthService.getCurrentUser();
-    const token = user.token;
-    console.log('1', token)
-    
+    const user = await AuthService.getCurrentUser();
+    console.log(user)
+    // const token = user.token;
+    // console.log('1', token)
+    // const decoded = jwt_decode(token);
+    // console.log('2', decoded)
+    if(user) {
+      const userEmail = user.email
+      console.log('1', userEmail)
+      customer = await findCustomerByEmail(userEmail);
+      console.log('4', customer)
+      setDogName(customer[0].dogs[0].dogName);
+      setSize(customer[0].dogs[0].size)
+      setHair(customer[0].dogs[0].hair)
+    }
   }, [])
   
+  const findCustomerByEmail = async(email) => {
+    const fetchedCustomers = await fetchCustomers();
+    console.log('2', fetchedCustomers);
+    const foundCustomer = fetchedCustomers.filter(item => item.email.includes(email))
+    console.log('3', foundCustomer)
+    return foundCustomer
+  }
+
   const handleConfirm = (e) => {
     e.preventDefault();
 
@@ -51,11 +62,13 @@ function DogDetails() {
       <h4>Please provide details about your dog</h4>
       <label htmlFor="dogName">Dog's name</label>
       <input
+        value = {dogName}
         name="dogName"
         onChange={(e) => setDogName(e.target.value)}
       ></input>
       <label htmlFor="size">Dog's size</label>
       <input
+        value={size}
         name="size"
         list="size"
         onChange={(e) => setSize(e.target.value)}

@@ -39,7 +39,7 @@ function Login() {
           .post(API_URL+"login", {email, password})
           .then(res =>  {
             if(res.data.token) {
-              document.cookie = `token=${res.data.token}`
+              // document.cookie = `token=${res.data.token}`
               localStorage.setItem("user", JSON.stringify(res.data))
               localStorage.getItem("user")
               user = JSON.parse(localStorage.getItem("user"));
