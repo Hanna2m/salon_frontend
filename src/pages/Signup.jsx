@@ -107,7 +107,7 @@ function Signup() {
 
   const addNewCustomer = async(name, email, dog, size, hair) => {
     const dogs = [{dog, size, hair}];
-    const phone = '';
+    // const phone = '';
     console.log('7', { dog, size, hair})
     console.log(API_URL+'customer')
       try {
