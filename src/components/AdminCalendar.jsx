@@ -65,7 +65,9 @@ function AdminCalendar() {
       startAccessor={"start"}
       endAccessor={"end"}
       views={["agenda", "month", "day", "week"]}
-      style={{ height: 450 }}
+      style={{ height: 700 }}
+      min={new Date(2022, 0, 1, 7, 0)}
+      max={new Date(2022, 0, 1, 20, 0)}
     />
   );
 }
