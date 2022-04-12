@@ -9,42 +9,64 @@ import "react-datepicker/dist/react-datepicker.css";
 import DogDetails from "./DogDetails";
 import ServiceSummary from "./ServiceSummary";
 
+const getAllDates = async () => {    
+  try {
+    const dates = await axios.get("https://groomer-server.herokuapp.com/day")
+    return dates
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
+const getWorkTimes = async () => {
+  try {
+    const time = await axios.get("https://groomer-server.herokuapp.com/time")
+    return time
+  } catch (error) {
+    console.log(error.message);
+  }
+};
+
 function NewBookingDate() {
   const { serviceId } = useParams();
-  const [startDate, setStartDate, startDateRef] = useState(new Date().setHours(0,0,0,0));
-  const [availableDate, setAvailableDate, availableDateRef] = useState([]);
-  const [filterDate, setFilterDate] = useState([]);
-  const [selectedService, setSelectedService] = useState({});
-  const [availableTimes, setAvailableTimes] = useState(); //*******/
-  const [daySchedule, setDaySchedule, dayScheduleRef] = useState([]); 
-  const [busySchedule, setBusySchedule, busyScheduleRef] = useState([]); 
-  
+  let startDate = new Date()
   const params = useParams();
   const id = params.serviceId;
-
+  const [selectedService, setSelectedService] = useState({});
+  let workingHours = [];
   const API_URL = `https://groomer-server.herokuapp.com/service/${id}`;
 
-  useEffect(() => {
-    getAllDates();
-    getWorkTimes();
-    //setStartDate(new Date().setHours(0,0,0,0));
-    getSelectedServiceData();
-  }, []);
+  const handleDateChange = (date) => {
+    const pickerDate = new Date(date)
+    startDate = (pickerDate.setHours(0,0,0,0))
+    console.log('1', startDate) 
+    fetchDaySchedul(pickerDate);
+  };
 
-  useEffect(() => {
-    //console.log("dayschedule useEffect 1;",daySchedule)
-    getAllDates();
-    // console.log(dayScheduleRef.current)
-    // return()=>{
-    //   console.log(dayScheduleRef.current)
-    // }
-  }, [startDate]); //daySchedule
+  const fetchDaySchedul = async (date) => {
+    console.log('2', date)
+    const scheduledDay = new Date(date).setHours(0,0,0,0)
+    console.log('2', scheduledDay)
+    const days = (await getAllDates()).data
+    for (let i = 0; i < days.length; i++) { 
+      days[i].date = new Date(days[i].date).setHours(0,0,0,0)
+    }
+    console.log('3', days)
+    let day = days.filter(item => {return (item.date === scheduledDay)})
+    const busyHours = day[0].time
+    console.log('4', busyHours)
+    workingHours = (await getWorkTimes()).data
+    console.log(workingHours.length, busyHours.length)
+    for (let i = 0; i < workingHours.length; i++){
+      for (let j = 0; j < busyHours.length; j++){
+        if (workingHours[i].startTime === busyHours[j].startTime) {
+          workingHours.splice(i, 1)
+        }
+      }
+    }
+    console.log('5', workingHours)
+  }
 
-  useEffect(() => {
-    //console.log("busySchedule useEffect 2;",busySchedule)
-   
-    
-  }, [dayScheduleRef.current]); 
 
   const getSelectedServiceData = async () => {
     try {
@@ -56,68 +78,11 @@ function NewBookingDate() {
       console.log(error.message);
     }
   };
-
-  const handleDateChange = (date) => {
-    const pickerDate = new Date(date)
-    setStartDate(pickerDate.setHours(0,0,0,0))
-    dateFilter()  
-    setAvailableDate([]);
-    getWorkTimes()    
-  };
-
-  const dateFilter = () => {
-    // console.log('dateFilter')
-    // console.log('busy', busySchedule)
-    for (let i = 0; i < busySchedule.length; i++) {
-      for (let j = 0; j < daySchedule.length; j++) {
-        if(busySchedule[i].startTime === daySchedule[j].startTime){
-          setDaySchedule(daySchedule => (daySchedule.filter(item => item.startTime !== busySchedule[i].startTime)))
-          console.log("day schedule", dayScheduleRef.current)
-
-        }
-      }
-    }
+  const blockBusyHours = date => {
+    getAllDates().filter(item => item.date.includes(date))
   }
-  
-  const getAllDates = async () => {    
-    try {
-      await axios.get("https://groomer-server.herokuapp.com/day")
-      .then((response) => {
-        let data = response.data;
-        for (let i = 0; i < data.length; i++) {          
-          if (new Date(data[i].date).setHours(0,0,0,0) === startDate) {
-            if (data[i].isAvailable === true) {
-              setBusySchedule(data[i].time)
-              console.log("busySchedule", busyScheduleRef.current)                 
-              //console.log("dayschedule", daySchedule)
 
-              // update daySchedule
 
-              // setAvailableDate((availableDate) => [
-              //   ...availableDate,                
-              // ]);              
-            } else {
-                //display all times for this date                
-                
-            }
-          }
-        }
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
-  const getWorkTimes = async () => {
-    setBusySchedule([])
-    try {
-      await axios.get("https://groomer-server.herokuapp.com/time")
-      .then((response) => {
-        setDaySchedule(response.data)
-      });
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
   
   return (
     <div>
@@ -134,7 +99,7 @@ function NewBookingDate() {
           <h4>Select Date:</h4>
           <DatePicker
             minDate={new Date()}
-            selected={startDate}
+            // selected={startDate}
             onChange={handleDateChange}
             dateFormat="dddd, MMMM Do YYYY, h:mm:ss a"
             shouldCloseOnSelect={false}
@@ -143,7 +108,7 @@ function NewBookingDate() {
         </div>
 
         <section>
-          {!dayScheduleRef.current ? (
+          {/* {!dayScheduleRef.current ? (
             <h2>Loading ..</h2>
           ) : (
             <div>
@@ -154,8 +119,8 @@ function NewBookingDate() {
                 <h4>No available appointments for selected date</h4>
               )}
             </div>
-          )}
-        </section>
+          )}*/}
+        </section> 
       </section>
     </div>
   );
