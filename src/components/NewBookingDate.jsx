@@ -1,7 +1,6 @@
 import React, { useEffect } from "react";
 import useState from 'react-usestateref';
 import DatePicker from "react-datepicker";
-import parseISO from "date-fns/parseISO";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
@@ -78,10 +77,6 @@ function NewBookingDate() {
       console.log(error.message);
     }
   };
-  const blockBusyHours = date => {
-    getAllDates().filter(item => item.date.includes(date))
-  }
-
 
   
   return (
