@@ -16,7 +16,7 @@ const SelectedCustomer = () => {
     const [hair, setHair] = useState();
     const id = params.customerId;
     console.log(id)
-    const API_URL = "http://localhost:3080/customer/";
+    const API_URL = "https://groomer-server.herokuapp.com/customer/";
 
     useEffect(() => {
         setLoading(true)
