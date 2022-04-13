@@ -87,9 +87,9 @@ function NewBookingDate() {
       <section>
         <ServiceSummary selectedService={selectedService} />
       </section>
-      <section>
+      {/* <section>
         <DogDetails />
-      </section>
+      </section> */}
 
       <section>
         <h3>Make Appointment</h3>
