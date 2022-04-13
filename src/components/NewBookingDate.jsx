@@ -1,5 +1,4 @@
-import React, { useEffect } from "react";
-import useState from 'react-usestateref';
+import React, { useState, useEffect } from "react";
 import DatePicker from "react-datepicker";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -8,10 +7,10 @@ import "react-datepicker/dist/react-datepicker.css";
 import DogDetails from "./DogDetails";
 import ServiceSummary from "./ServiceSummary";
 
-const getAllDates = async () => {    
+const getAllDates = async () => {
   try {
-    const dates = await axios.get("https://groomer-server.herokuapp.com/day")
-    return dates
+    const dates = await axios.get("https://groomer-server.herokuapp.com/day");
+    return dates;
   } catch (error) {
     console.log(error.message);
   }
@@ -19,8 +18,8 @@ const getAllDates = async () => {
 
 const getWorkTimes = async () => {
   try {
-    const time = await axios.get("https://groomer-server.herokuapp.com/time")
-    return time
+    const time = await axios.get("https://groomer-server.herokuapp.com/time");
+    return time;
   } catch (error) {
     console.log(error.message);
   }
@@ -28,44 +27,49 @@ const getWorkTimes = async () => {
 
 function NewBookingDate() {
   const { serviceId } = useParams();
-  let startDate = new Date()
   const params = useParams();
   const id = params.serviceId;
+  let startDate = new Date();
   const [selectedService, setSelectedService] = useState({});
   let workingHours = [];
   const API_URL = `https://groomer-server.herokuapp.com/service/${id}`;
 
+  useEffect(() => {
+    getSelectedServiceData();
+  }, []);
+
   const handleDateChange = (date) => {
-    const pickerDate = new Date(date)
-    startDate = (pickerDate.setHours(0,0,0,0))
-    console.log('1', startDate) 
+    const pickerDate = new Date(date);
+    startDate = pickerDate.setHours(0, 0, 0, 0);
+    console.log("1", startDate);
     fetchDaySchedul(pickerDate);
   };
 
   const fetchDaySchedul = async (date) => {
-    console.log('2', date)
-    const scheduledDay = new Date(date).setHours(0,0,0,0)
-    console.log('2', scheduledDay)
-    const days = (await getAllDates()).data
-    for (let i = 0; i < days.length; i++) { 
-      days[i].date = new Date(days[i].date).setHours(0,0,0,0)
+    console.log("2", date);
+    const scheduledDay = new Date(date).setHours(0, 0, 0, 0);
+    console.log("2", scheduledDay);
+    const days = (await getAllDates()).data;
+    for (let i = 0; i < days.length; i++) {
+      days[i].date = new Date(days[i].date).setHours(0, 0, 0, 0);
     }
-    console.log('3', days)
-    let day = days.filter(item => {return (item.date === scheduledDay)})
-    const busyHours = day[0].time
-    console.log('4', busyHours)
-    workingHours = (await getWorkTimes()).data
-    console.log(workingHours.length, busyHours.length)
-    for (let i = 0; i < workingHours.length; i++){
-      for (let j = 0; j < busyHours.length; j++){
+    console.log("3", days);
+    let day = days.filter((item) => {
+      return item.date === scheduledDay;
+    });
+    const busyHours = day[0].time;
+    console.log("4", busyHours);
+    workingHours = (await getWorkTimes()).data;
+    console.log(workingHours.length, busyHours.length);
+    for (let i = 0; i < workingHours.length; i++) {
+      for (let j = 0; j < busyHours.length; j++) {
         if (workingHours[i].startTime === busyHours[j].startTime) {
-          workingHours.splice(i, 1)
+          workingHours.splice(i, 1);
         }
       }
     }
-    console.log('5', workingHours)
-  }
-
+    console.log("5", workingHours);
+  };
 
   const getSelectedServiceData = async () => {
     try {
@@ -78,7 +82,6 @@ function NewBookingDate() {
     }
   };
 
-  
   return (
     <div>
       <section>
@@ -115,7 +118,7 @@ function NewBookingDate() {
               )}
             </div>
           )}*/}
-        </section> 
+        </section>
       </section>
     </div>
   );
