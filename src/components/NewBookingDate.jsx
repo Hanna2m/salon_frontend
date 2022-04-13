@@ -3,9 +3,14 @@ import DatePicker from "react-datepicker";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
-
+import { Outlet, useLocation } from "react-router-dom";
 import DogDetails from "./DogDetails";
 import ServiceSummary from "./ServiceSummary";
+import AuthService from "../services/auth.service";
+import { get } from "react-hook-form";
+import { Button, Link } from "@material-ui/core";
+import Modal from "./Modal";
+import Login from "../pages/Login";
 
 const getAllDates = async () => {
   try {
@@ -28,14 +33,21 @@ const getWorkTimes = async () => {
 function NewBookingDate() {
   const { serviceId } = useParams();
   const params = useParams();
+  const location = useLocation();
   const id = params.serviceId;
   let startDate = new Date();
   const [selectedService, setSelectedService] = useState({});
+  const [dayFreeTimes, setDayFreeTimes] = useState({});
+  const [bookingTime, setBokingTime] = useState();
+  const [user, setUser] = useState({});
+  const [showSignup, setShowSignup] = useState(false);
   let workingHours = [];
   const API_URL = `https://groomer-server.herokuapp.com/service/${id}`;
 
   useEffect(() => {
     getSelectedServiceData();
+    setUser(AuthService.getCurrentUser())
+    console.log("1", user)
   }, []);
 
   const handleDateChange = (date) => {
@@ -69,7 +81,9 @@ function NewBookingDate() {
       }
     }
     console.log("5", workingHours);
+    setDayFreeTimes(workingHours);
   };
+  console.log("6", dayFreeTimes);
 
   const getSelectedServiceData = async () => {
     try {
@@ -81,15 +95,37 @@ function NewBookingDate() {
       console.log(error.message);
     }
   };
+  
+  const handleSelectTime = (time) => {
+    setBokingTime(time)
+  }
+
+  const handleConfirm = async() => {
+    try {
+      await axios.post("https://groomer-server.herokuapp.com/")
+      
+    } catch (error) {
+      
+    }
+  }
+
+  const handleSignupClick = () => {
+   
+  }
 
   return (
     <div>
       <section>
         <ServiceSummary selectedService={selectedService} />
+        <div>
+          <p>Appointment time: {bookingTime}</p>
+        </div>
       </section>
-      <section>
+      
+      {/* Not for MVP */}
+      {/* <section>
         <DogDetails />
-      </section>
+      </section> */}
 
       <section>
         <h3>Make Appointment</h3>
@@ -104,20 +140,24 @@ function NewBookingDate() {
             inline
           />
         </div>
+        <div className="time-slots">
+            <h4>Select Time:</h4>
+            {dayFreeTimes.length > 0 &&
+            (dayFreeTimes.map((item) => <button onClick={(e)=>handleSelectTime(item.startTime)}>{item.startTime}</button>))}
+        </div>
 
         <section>
-          {/* {!dayScheduleRef.current ? (
-            <h2>Loading ..</h2>
-          ) : (
-            <div>
-              {dayScheduleRef.current.length > 0 ? (
-                // daySchedule.map((t, i) => <button key={i}>{t}</button>)
-                dayScheduleRef.current.map(day => <h4 key={day.startTime}>{day.startTime}</h4>)
-              ) : (
-                <h4>No available appointments for selected date</h4>
-              )}
-            </div>
-          )}*/}
+          <div>
+            {(user) &&
+            <Button onClick={()=>handleConfirm()}>Confirm</Button>
+            }
+            {(!user) &&
+            <p>Please <Link replace state={{ from: location }} className="navbar-link" to="/login">Log in</Link> 
+              or <Link replace state={{ from: location }} className="navbar-link" to="/login">Sign up</Link> to proceed the booking</p>
+            }
+          </div>
+          
+
         </section>
       </section>
     </div>
