@@ -3,6 +3,7 @@ import { Link, Outlet, useLocation } from "react-router-dom";
 import AuthService from "../services/auth.service";
 
 import "./styles/_header.css";
+import logo from "../assets/logo.png";
 
 function Header() {
   const location = useLocation();
@@ -14,7 +15,9 @@ function Header() {
 
   return (
     <header>
-      <h3>Happy Dogs</h3>
+      <Link to="/">
+        <img src={logo} className="logo" />
+      </Link>
       <nav className="navbar">
         {user && (
           <div>
