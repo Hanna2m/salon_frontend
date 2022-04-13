@@ -1,7 +1,7 @@
 import React from "react";
 import "../components/styles/_dog.css";
 
-function Dog() {
+function Missing() {
   return (
     <>
     <h2>Sorry, page not found</h2>
@@ -32,4 +32,4 @@ function Dog() {
   );
 }
 
-export default Dog;
+export default Missing;

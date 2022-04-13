@@ -1,10 +1,13 @@
 import React from "react";
-import { Link, Outlet } from "react-router-dom";
+import { Link, Outlet, useNavigate } from "react-router-dom";
+import { useContext } from "react";
 import AdminCalendar from "../components/AdminCalendar";
+import AuthContext from "../context/AuthProvider";
 
 import Header from "../components/Header";
 
 const Dashboard = () => {
+  const navigate = useNavigate();
   return (
     <>
       <Header />
