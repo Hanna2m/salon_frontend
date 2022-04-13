@@ -3,10 +3,15 @@ import DatePicker from "react-datepicker";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
+import { Outlet, useLocation } from "react-router-dom";
 import DogDetails from "./DogDetails";
 import ServiceSummary from "./ServiceSummary";
+import AuthService from "../services/auth.service";
+import { get } from "react-hook-form";
+import { Button, Link } from "@material-ui/core";
 import Modal from "./Modal";
 import moment, { defineLocale } from "moment";
+
 const getAllDates = async () => {
   try {
     const dates = await axios.get("https://groomer-server.herokuapp.com/day");
@@ -26,9 +31,13 @@ const getWorkTimes = async () => {
 function NewBookingDate() {
   const { serviceId } = useParams();
   const params = useParams();
+  const location = useLocation();
   const id = params.serviceId;
   let startDate = new Date();
   const [selectedService, setSelectedService] = useState({});
+  const [bookingTime, setBokingTime] = useState();
+  const [user, setUser] = useState({});
+  const [showSignup, setShowSignup] = useState(false);
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
@@ -39,6 +48,8 @@ function NewBookingDate() {
 
   useEffect(() => {
     getSelectedServiceData();
+    setUser(AuthService.getCurrentUser())
+    console.log("1", user)
   }, []);
 
   const handleDateChange = (date) => {
@@ -68,6 +79,7 @@ function NewBookingDate() {
     }
     setAvailableTimeSlots(workingHours);
   };
+  
 
   const getSelectedServiceData = async () => {
     try {
@@ -79,6 +91,16 @@ function NewBookingDate() {
       console.log(error.message);
     }
   };
+  
+
+  const handleConfirm = async() => {
+    try {
+      await axios.post("https://groomer-server.herokuapp.com/")
+      
+    } catch (error) {
+      
+    }
+  }
 
   const handleTimeSelect = (e) => {
     setShowModal(true);
@@ -90,42 +112,50 @@ function NewBookingDate() {
     <div>
       <section>
         <ServiceSummary selectedService={selectedService} />
+        <div>
+          <p>Appointment time: {bookingTime}</p>
+        </div>
       </section>
+      
+      {/* Not for MVP */}
       {/* <section>
         <DogDetails />
       </section> */}
+
       <section>
         <h3>Make Appointment</h3>
-        <div>
-          <h4>Select Date:</h4>
-          <DatePicker
-            minDate={new Date()}
-            // selected={startDate}
-            onChange={handleDateChange}
-            dateFormat="dddd, MMMM Do YYYY, h:mm:ss a"
-            shouldCloseOnSelect={false}
-            inline
-          />
+        <div className="booking-time">
+          <div className="calendar">
+            <h4>Select Date:</h4>
+            <DatePicker
+              minDate={new Date()}
+              // selected={startDate}
+              onChange={handleDateChange}
+              dateFormat="dddd, MMMM Do YYYY, h:mm:ss a"
+              shouldCloseOnSelect={false}
+              inline
+            />
+          </div>
+          <div className="time-slots">
+              <h4>Select Time:</h4>
+              {availableTimeSlots.length > 0 &&
+              (availableTimeSlots.map((item) => <Button onClick={handleTimeSelect} key={item.startTime}>{item.startTime}</Button>))}
+          </div>
         </div>
+        
 
         <section>
-          <h2>Select available time: </h2>
+          <div>
+            {(user) &&
+            <Button onClick={()=>handleConfirm()}>Confirm</Button>
+            }
+            {(!user) &&
+            <p>Please <Link replace state={{ from: location }} className="navbar-link" to="/login">Log in</Link> 
+              or <Link replace state={{ from: location }} className="navbar-link" to="/login">Sign up</Link> to proceed the booking</p>
+            }
+          </div>
+          
 
-          {!availableTimeSlots ? (
-            <h3>Loading times ...</h3>
-          ) : (
-            <div>
-              {availableTimeSlots.map((time) => (
-                <button
-                  type="button"
-                  onClick={handleTimeSelect}
-                  key={time.startTime}
-                >
-                  {time.startTime}
-                </button>
-              ))}
-            </div>
-          )}
         </section>
       </section>
       <Modal onClose={() => setShowModal(false)} show={showModal}>

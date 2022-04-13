@@ -1,16 +1,19 @@
 import React from "react";
 import axios from "axios";
-import { useLocation, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from 'yup';
 import useAuth from "../hooks/useAuth";
 
 function Login() {
+  const { setAuth } = useAuth();
+
   const navigate = useNavigate();
   const location = useLocation();
+  const from = location.state?.from?.pathname || "/"
   const API_URL = "https://groomer-server.herokuapp.com/";
-  const { setAuth } = useAuth();
+  
 
   const validationSchema = Yup.object().shape({
     email: Yup.string()
@@ -52,15 +55,12 @@ function Login() {
               const role = user.role
               console.log('2', name)
               setAuth({ token, role, name });
-              // console.log('2', localStorage.getItem("user").role)
-              if (user.role === "admin") {
-                window.location = "/dashboard";
-              } 
-              else {
-                if (location.state?.from) {
-                  navigate(location.state.from);
-                }
-              }
+              // if (user.role === "admin") {
+              //   window.location = "/dashboard";
+              // } 
+              // else {
+                navigate(from, { replace: true });
+              // }
             }
             return res.data
             })
