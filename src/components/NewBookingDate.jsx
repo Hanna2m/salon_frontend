@@ -37,7 +37,6 @@ function NewBookingDate() {
   const [selectedService, setSelectedService] = useState({});
   const [bookingTime, setBokingTime] = useState();
   const [user, setUser] = useState({});
-  const [showSignup, setShowSignup] = useState(false);
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");
   const [selectedTime, setSelectedTime] = useState("");
@@ -101,19 +100,22 @@ function NewBookingDate() {
       
     }
   }
-
-  const handleTimeSelect = (e) => {
+  const handleSelectTime = (time) => {
+    setSelectedService(time)
+  }
+  const handleBookTime = (e) => {
     setShowModal(true);
-    setSelectedTime(e.target.innerText);
-    console.log(`${e.target.innerText} selected`);
+    // setSelectedTime(e.target.innerText);
+    // console.log(`${e.target.innerText} selected`);
   };
 
   return (
-    <div>
+    <div className="content">
+      <h3>Make Appointment</h3>
       <section>
         <ServiceSummary selectedService={selectedService} />
         <div>
-          <p>Appointment time: {bookingTime}</p>
+          <p>Appointment time: {selectedTime}</p>
         </div>
       </section>
       
@@ -123,7 +125,6 @@ function NewBookingDate() {
       </section> */}
 
       <section>
-        <h3>Make Appointment</h3>
         <div className="booking-time">
           <div className="calendar">
             <h4>Select Date:</h4>
@@ -139,7 +140,7 @@ function NewBookingDate() {
           <div className="time-slots">
               <h4>Select Time:</h4>
               {availableTimeSlots.length > 0 &&
-              (availableTimeSlots.map((item) => <Button onClick={handleTimeSelect} key={item.startTime}>{item.startTime}</Button>))}
+              (availableTimeSlots.map((item) => <Button  onClick={(e) => setSelectedTime(item.startTime)} key={item.startTime}>{item.startTime}</Button>))}
           </div>
         </div>
         
@@ -147,7 +148,7 @@ function NewBookingDate() {
         <section>
           <div>
             {(user) &&
-            <Button onClick={()=>handleConfirm()}>Confirm</Button>
+            <Button variant="contained" onClick={handleBookTime}>Book the appointment</Button>
             }
             {(!user) &&
             <p>Please <Link replace state={{ from: location }} className="navbar-link" to="/login">Log in</Link> 
@@ -162,9 +163,17 @@ function NewBookingDate() {
         <section>
           <h3>Your appointment summary</h3>
           <ServiceSummary selectedService={selectedService} />
-          <p>
+          {(selectedDate && selectedTime) && (
+            <p>
             On {moment(selectedDate).format("DD MMM YYYY")} at {selectedTime}
           </p>
+          )} 
+          {(!selectedTime) && (
+            <h3>
+            Please select the time before
+          </h3>
+          )} 
+          
         </section>
       </Modal>
     </div>
