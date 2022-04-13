@@ -1,12 +1,11 @@
-import React, { useState, useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { useParams } from "react-router-dom";
 import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
-
 import DogDetails from "./DogDetails";
 import ServiceSummary from "./ServiceSummary";
-
+import { defineLocale } from "moment";
 const getAllDates = async () => {
   try {
     const dates = await axios.get("https://groomer-server.herokuapp.com/day");
@@ -15,7 +14,6 @@ const getAllDates = async () => {
     console.log(error.message);
   }
 };
-
 const getWorkTimes = async () => {
   try {
     const time = await axios.get("https://groomer-server.herokuapp.com/time");
@@ -24,43 +22,37 @@ const getWorkTimes = async () => {
     console.log(error.message);
   }
 };
-
 function NewBookingDate() {
   const { serviceId } = useParams();
   const params = useParams();
   const id = params.serviceId;
   let startDate = new Date();
   const [selectedService, setSelectedService] = useState({});
+  const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   let workingHours = [];
+
   const API_URL = `https://groomer-server.herokuapp.com/service/${id}`;
 
   useEffect(() => {
     getSelectedServiceData();
   }, []);
-
   const handleDateChange = (date) => {
     const pickerDate = new Date(date);
     startDate = pickerDate.setHours(0, 0, 0, 0);
-    console.log("1", startDate);
     fetchDaySchedul(pickerDate);
   };
 
   const fetchDaySchedul = async (date) => {
-    console.log("2", date);
     const scheduledDay = new Date(date).setHours(0, 0, 0, 0);
-    console.log("2", scheduledDay);
     const days = (await getAllDates()).data;
     for (let i = 0; i < days.length; i++) {
       days[i].date = new Date(days[i].date).setHours(0, 0, 0, 0);
     }
-    console.log("3", days);
     let day = days.filter((item) => {
       return item.date === scheduledDay;
     });
     const busyHours = day[0].time;
-    console.log("4", busyHours);
     workingHours = (await getWorkTimes()).data;
-    console.log(workingHours.length, busyHours.length);
     for (let i = 0; i < workingHours.length; i++) {
       for (let j = 0; j < busyHours.length; j++) {
         if (workingHours[i].startTime === busyHours[j].startTime) {
@@ -68,7 +60,7 @@ function NewBookingDate() {
         }
       }
     }
-    console.log("5", workingHours);
+    setAvailableTimeSlots(workingHours);
   };
 
   const getSelectedServiceData = async () => {
@@ -82,15 +74,18 @@ function NewBookingDate() {
     }
   };
 
+  const handleTimeSelect = (e) => {
+    console.log(`${e.target.innerText} selected`);
+  };
+
   return (
     <div>
       <section>
         <ServiceSummary selectedService={selectedService} />
       </section>
-      {/* <section>
+      <section>
         <DogDetails />
-      </section> */}
-
+      </section>
       <section>
         <h3>Make Appointment</h3>
         <div>
@@ -106,18 +101,23 @@ function NewBookingDate() {
         </div>
 
         <section>
-          {/* {!dayScheduleRef.current ? (
-            <h2>Loading ..</h2>
+          <h2>Select available time: </h2>
+
+          {!availableTimeSlots ? (
+            <h3>Loading times ...</h3>
           ) : (
             <div>
-              {dayScheduleRef.current.length > 0 ? (
-                // daySchedule.map((t, i) => <button key={i}>{t}</button>)
-                dayScheduleRef.current.map(day => <h4 key={day.startTime}>{day.startTime}</h4>)
-              ) : (
-                <h4>No available appointments for selected date</h4>
-              )}
+              {availableTimeSlots.map((time) => (
+                <button
+                  type="button"
+                  onClick={handleTimeSelect}
+                  key={time.startTime}
+                >
+                  {time.startTime}
+                </button>
+              ))}
             </div>
-          )}*/}
+          )}
         </section>
       </section>
     </div>
