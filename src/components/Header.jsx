@@ -4,6 +4,7 @@ import AuthService from "../services/auth.service";
 
 import "./styles/_header.css";
 import logo from "../assets/logo.png";
+import { Button } from "@material-ui/core";
 
 function Header() {
   const location = useLocation();
@@ -15,24 +16,30 @@ function Header() {
 
   return (
     <header>
-      <Link to="/">
-        <img src={logo} className="logo" />
-      </Link>
+      
       <nav className="navbar">
+        <Link to="/">
+          <img src={logo} className="logo" />
+        </Link>
         {user && (
-          <div>
-            <p>Hello, {user.name} </p>
-            <div>
-              <Link to="/" className="navbar-link">
-                Home
-              </Link>
-              {user.role === "Admin" && (
+          <div className="menu">
+            <div id="links">
+              {user.role === "admin" && (
                 <Link to="/dashboard" className="navbar-link">
                   Dashboard
                 </Link>
               )}
-              <button onClick={handleLogout}>Log out</button>
             </div>
+            <div id="auth">
+              <h6>Hello, {user.name} </h6>
+              <Button variant="outlined" size="small" onClick={handleLogout}>Log out</Button>
+            </div>
+              {/* <Link to="/" className="navbar-link">
+                Home
+              </Link> */}
+              
+              
+            
           </div>
         )}
         {!user && (

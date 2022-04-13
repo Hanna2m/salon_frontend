@@ -35,7 +35,6 @@ function NewBookingDate() {
   const id = params.serviceId;
   let startDate = new Date();
   const [selectedService, setSelectedService] = useState({});
-  const [bookingTime, setBokingTime] = useState();
   const [user, setUser] = useState({});
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
   const [selectedDate, setSelectedDate] = useState("");

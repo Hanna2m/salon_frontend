@@ -4,9 +4,9 @@ section {
 
 .hero-container {
   color: rgb(9, 0, 65);
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+
   display: flex;
-  flex-direction: row-reverse;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
   text-align: left;
@@ -16,6 +16,7 @@ section {
 
 .hero-copy {
   display: flex;
+  font-family: 'Lato', sans-serif;
   flex-direction: column;
   padding: 0.5rem;
   max-width: 20rem;
@@ -25,21 +26,28 @@ section {
 
 .hero-heading {
   color: rgb(9, 0, 65);
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
-  font-size: 1.5rem;
+  font-size: 48px;
+  font-family: 'Lato', sans-serif;
 }
 
 .hero-subheading {
-  font-size: 0.875rem;
+  font-size: 28px;
   max-width: 30ch;
 }
 
 .hero-image-container {
-  flex-basis: 50%;
-  max-width: 20rem;
+  flex-basis: 80%;
+  max-width: 30rem;
 }
 
 .hero-image {
   display: block;
   width: 100%;
+}
+
+@media screen and (max-width: 600px) {
+  .hero-container{
+    flex-direction: column-reverse;
+
+  }
 }

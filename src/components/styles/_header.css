@@ -16,3 +16,22 @@ header {
   text-transform: uppercase;
   color: inherit;
 }
+
+.navbar {
+  width: 100vw;
+  display: flex;
+  flex-direction: row;
+}
+.menu {
+  display: flex;
+  align-items: flex-end;
+}
+
+#auth {
+  display: flex;
+  flex-direction: column;
+  align-items: end;
+}
+#links {
+  margin-bottom: 3px;
+}
