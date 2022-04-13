@@ -5,7 +5,8 @@ import axios from "axios";
 import "react-datepicker/dist/react-datepicker.css";
 import DogDetails from "./DogDetails";
 import ServiceSummary from "./ServiceSummary";
-import { defineLocale } from "moment";
+import Modal from "./Modal";
+import moment, { defineLocale } from "moment";
 const getAllDates = async () => {
   try {
     const dates = await axios.get("https://groomer-server.herokuapp.com/day");
@@ -29,6 +30,9 @@ function NewBookingDate() {
   let startDate = new Date();
   const [selectedService, setSelectedService] = useState({});
   const [availableTimeSlots, setAvailableTimeSlots] = useState([]);
+  const [selectedDate, setSelectedDate] = useState("");
+  const [selectedTime, setSelectedTime] = useState("");
+  const [showModal, setShowModal] = useState(false);
   let workingHours = [];
 
   const API_URL = `https://groomer-server.herokuapp.com/service/${id}`;
@@ -36,10 +40,12 @@ function NewBookingDate() {
   useEffect(() => {
     getSelectedServiceData();
   }, []);
+
   const handleDateChange = (date) => {
     const pickerDate = new Date(date);
     startDate = pickerDate.setHours(0, 0, 0, 0);
     fetchDaySchedul(pickerDate);
+    setSelectedDate(startDate);
   };
 
   const fetchDaySchedul = async (date) => {
@@ -75,6 +81,8 @@ function NewBookingDate() {
   };
 
   const handleTimeSelect = (e) => {
+    setShowModal(true);
+    setSelectedTime(e.target.innerText);
     console.log(`${e.target.innerText} selected`);
   };
 
@@ -120,6 +128,15 @@ function NewBookingDate() {
           )}
         </section>
       </section>
+      <Modal onClose={() => setShowModal(false)} show={showModal}>
+        <section>
+          <h3>Your appointment summary</h3>
+          <ServiceSummary selectedService={selectedService} />
+          <p>
+            On {moment(selectedDate).format("DD MMM YYYY")} at {selectedTime}
+          </p>
+        </section>
+      </Modal>
     </div>
   );
 }
