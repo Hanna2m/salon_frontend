@@ -43,7 +43,7 @@ function NewBookingDate() {
   const [showModal, setShowModal] = useState(false);
   let workingHours = [];
 
-  const API_URL = `https://groomer-server.herokuapp.com/service/${id}`;
+  const API_URL = 'https://groomer-server.herokuapp.com/';
 
   useEffect(() => {
     getSelectedServiceData();
@@ -82,7 +82,7 @@ function NewBookingDate() {
 
   const getSelectedServiceData = async () => {
     try {
-      await axios.get(API_URL).then((res) => {
+      await axios.get(API_URL+`service/${id}`).then((res) => {
         let data = res.data;
         setSelectedService(data);
       });
@@ -91,23 +91,47 @@ function NewBookingDate() {
     }
   };
   
-
-  const handleConfirm = async() => {
-    try {
-      await axios.post("https://groomer-server.herokuapp.com/")
-      
-    } catch (error) {
-      
-    }
-  }
-  const handleSelectTime = (time) => {
-    setSelectedService(time)
-  }
   const handleBookTime = (e) => {
     setShowModal(true);
-    // setSelectedTime(e.target.innerText);
-    // console.log(`${e.target.innerText} selected`);
   };
+
+  const handleAddAppointment = async (selectedDate, selectedTime, user) =>{
+    const isAvailableTime = false
+    const isAvailableDay = true
+    const reservedTime = {selectedTime, isAvailableTime};
+    console.log('1', new Date(selectedDate).toISOString())
+    const days = (await getAllDates()).data;
+    for (let i = 0; i < days.length; i++) {
+      days[i].date = new Date(days[i].date).setHours(0, 0, 0, 0);
+    }
+    let day = days.filter((item) => {
+      return item.date === selectedDate;
+    });
+
+    console.log('2', day)
+    const changedTime = day[0].time.push(reservedTime);
+    console.log('3', day[0].time)
+    const convertDay = new Date(selectedDate + 7200000).toISOString()
+    console.log('4', convertDay);
+   
+    
+    try {
+      await axios.put(API_URL+"day/"+day[0]._id, { 
+        date: convertDay,
+        isAvailable: isAvailableDay,
+        time: [{
+          startTime: selectedTime,
+          isAvailable: isAvailableTime
+        }]
+        })
+      .then((res) => {
+        console.log("POST", res.data);
+        setShowModal(false);
+      });
+    } catch (error) {
+    console.log(error);
+  }
+  }
 
   return (
     <div className="content">
@@ -159,7 +183,9 @@ function NewBookingDate() {
 
         </section>
       </section>
-      <Modal onClose={() => setShowModal(false)} show={showModal}>
+      <Modal onClose={() => setShowModal(false)}
+            show={showModal}
+            onSubmit={() => handleAddAppointment(selectedDate, selectedTime, user)}>
         <section>
           <h3>Your appointment summary</h3>
           <ServiceSummary selectedService={selectedService} />
