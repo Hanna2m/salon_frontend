@@ -1,9 +1,18 @@
 .App {
-  text-align: center;
+  text-align: left;
   margin: 0;
   padding: 0;
 }
+.content {
+  display: flex;
+  flex-direction: column;
+  max-width: 790px;
+  margin: auto;
+}
 
+h3{
+  text-align: left;
+}
 .booking-time {
   display: flex;
   flex-direction: row;

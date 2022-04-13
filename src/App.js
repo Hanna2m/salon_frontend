@@ -1,7 +1,6 @@
 import "./App.css";
 import Home from "./pages/Home";
 import { Routes, Route } from "react-router-dom";
-import RequireAuth from "./components/RequireAuth";
 import Customers from "./pages/Customers";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
