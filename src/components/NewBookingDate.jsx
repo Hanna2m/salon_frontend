@@ -124,22 +124,25 @@ function NewBookingDate() {
 
       <section>
         <h3>Make Appointment</h3>
-        <div>
-          <h4>Select Date:</h4>
-          <DatePicker
-            minDate={new Date()}
-            // selected={startDate}
-            onChange={handleDateChange}
-            dateFormat="dddd, MMMM Do YYYY, h:mm:ss a"
-            shouldCloseOnSelect={false}
-            inline
-          />
+        <div className="booking-time">
+          <div className="calendar">
+            <h4>Select Date:</h4>
+            <DatePicker
+              minDate={new Date()}
+              // selected={startDate}
+              onChange={handleDateChange}
+              dateFormat="dddd, MMMM Do YYYY, h:mm:ss a"
+              shouldCloseOnSelect={false}
+              inline
+            />
+          </div>
+          <div className="time-slots">
+              <h4>Select Time:</h4>
+              {availableTimeSlots.length > 0 &&
+              (availableTimeSlots.map((item) => <Button onClick={handleTimeSelect} key={item.startTime}>{item.startTime}</Button>))}
+          </div>
         </div>
-        <div className="time-slots">
-            <h4>Select Time:</h4>
-            {availableTimeSlots.length > 0 &&
-            (availableTimeSlots.map((item) => <button onClick={handleTimeSelect} key={item.startTime}>{item.startTime}</button>))}
-        </div>
+        
 
         <section>
           <div>
