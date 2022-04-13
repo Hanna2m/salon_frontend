@@ -2,6 +2,7 @@ import React, { useState, useEffect } from "react";
 import axios from "axios";
 import Header from "../components/Header";
 import { Button } from "@material-ui/core";
+import ServiceItem from "./ServiceItem";
 
 function ServicesConfig() {
   const [serviceTitle, setServiceTitle] = useState("");
@@ -9,10 +10,13 @@ function ServicesConfig() {
   const [serviceCost, setServiceCost] = useState("");
   const [serviceDuration, setServiceDuration] = useState("");
   const [allServices, setAllServices] = useState("");
+  // const [contentEditable, setContentEditable] = useState(false);
+
   const API_URL = "https://groomer-server.herokuapp.com/service/";
 
   useEffect(() => {
     getAllServices();
+    // updateService();
   }, []);
 
   const getAllServices = async () => {
@@ -42,16 +46,7 @@ function ServicesConfig() {
     }
   };
 
-  const deleteService = (id) => {
-    axios.delete(API_URL + id).then(() =>
-      setAllServices(
-        allServices.filter((val) => {
-          return val._id != id;
-        })
-      )
-    );
-  };
-
+  console.log(serviceCost);
   return (
     <div>
       <Header />
@@ -62,28 +57,29 @@ function ServicesConfig() {
         <input
           type="text"
           name="title"
-          // value={serviceTitle}
+          value={serviceTitle}
           onChange={(e) => setServiceTitle(e.target.value)}
         />
         <label>Description: </label>
         <input
           type="text"
           name="description"
-          // value={serviceDescription}
+          value={serviceDescription}
           onChange={(e) => setServiceDescription(e.target.value)}
         />
         <label>Cost: </label>
         <input
           type="number"
           name="cost"
-          // value={serviceCost}
+          value={serviceCost}
           onChange={(e) => setServiceCost(e.target.value)}
+          onBlur={(e) => setServiceCost(e.target.value)}
         />
         <label>Duration: </label>
         <input
           type="number"
           name="duration"
-          // value={serviceDuration}
+          value={serviceDuration}
           onChange={(e) => setServiceDuration(e.target.value)}
         />
         <button type="submit">Save</button>
@@ -94,20 +90,19 @@ function ServicesConfig() {
         <ul>
           {allServices &&
             allServices.map((s) => (
-              <div key={s.title}>
-                <h4>Title: {s.title}</h4>
-                <p>
-                  {s.description} <span>€{s.cost} </span>
-                  <span>Duration: {s.duration}mins </span>
-                </p>
-                <button
-                  onClick={() => {
-                    deleteService(s._id);
-                  }}
-                >
-                  Delete
-                </button>
-              </div>
+              <ServiceItem
+                {...s}
+                allSeriveds={allServices}
+                setAllServices={setAllServices}
+                serviceTitle={serviceTitle}
+                setServiceTitle={setServiceTitle}
+                serviceDescription={serviceDescription}
+                setServiceDescription={setServiceDescription}
+                serviceCost={serviceCost}
+                setServiceCost={setServiceCost}
+                serviceDuration={serviceDuration}
+                setServiceDuration={setServiceDuration}
+              />
             ))}
         </ul>
       </section>
