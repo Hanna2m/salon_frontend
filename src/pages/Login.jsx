@@ -6,6 +6,7 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import useAuth from "../hooks/useAuth";
 import Header from "../components/Header";
+import { Button } from "@material-ui/core";
 
 import "../components/styles/_login.css";
 
@@ -95,7 +96,9 @@ function Login() {
               />
               <div className="invalid-feedback">{errors.password?.message}</div>
             </div>
-            <button type="submit">Log in</button>
+            <Button variant="outlined" type="submit">
+              Log in
+            </Button>
           </form>
         </div>
       </div>
