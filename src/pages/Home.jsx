@@ -8,8 +8,11 @@ function Home() {
   return (
     <>
       <Header />
-      <HomepageHero />
-      <Services />
+      <div className="content">
+        <HomepageHero />
+        <Services />
+      </div>
+      
     </>
   );
 }

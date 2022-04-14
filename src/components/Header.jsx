@@ -14,6 +14,7 @@ import AuthService from "../services/auth.service";
 // import "./styles/_header.css";
 import DrawerComponent from "./Drawer";
 import logo from "../assets/logo.png";
+import { Button } from "@material-ui/core";
 
 const useStyles = makeStyles((theme) => ({
   root: {
