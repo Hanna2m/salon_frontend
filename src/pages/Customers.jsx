@@ -4,6 +4,7 @@ import TableCustomers from "../components/Table";
 import Modal from "../components/Modal";
 import Header from "../components/Header";
 import { Button } from "@material-ui/core";
+import icon from "../assets/icon_customer.svg"
 
 function Customers() {
   const [query, setQuery] = useState("");
@@ -67,73 +68,103 @@ function Customers() {
     <>
       <Header />
       <div className="content">
-        <h2>Customers</h2>
-        <Button variant="contained" onClick={() => setShow(true)}>
+        <div className="section-title">
+        <img src={icon} alt="customer-icon" />
+          <h2>Customers</h2>
+        </div>
+        <div className="search">
+          <input
+            className="form-control"
+            type="text"
+            placeholder="Search..."
+            onChange={(e) => setQuery(e.target.value)}
+          />
+        </div>
+        <div className="btn-float-right">
+        <Button variant="text" onClick={() => setShow(true)}>
           Add customer
         </Button>
-        <br />
+        </div>
+  
 
-        <input
-          type="text"
-          placeholder="Search..."
-          className="search"
-          onChange={(e) => setQuery(e.target.value)}
-        />
+       
         <TableCustomers data={search(allCustomers)} />
         <Modal
+          title="Add customer"
           onClose={() => setShow(false)}
           show={show}
           onSubmit={handleSubmit}
         >
           <form>
-            <label htmlFor="name">Name</label>
-            <input
-              name="name"
-              onChange={(e) => setName(e.target.value)}
-            ></input>
-            <label htmlFor="email">Email</label>
-            <input
-              name="email"
-              onChange={(e) => setEmail(e.target.value)}
-            ></input>
-            <label htmlFor="phone">Phone</label>
-            <input
-              name="phone"
-              onChange={(e) => setPhone(e.target.value)}
-            ></input>
+            <div className="form-group">
+              <label htmlFor="name">Name</label>
+              <input
+                className="form-control"
+                name="name"
+                onChange={(e) => setName(e.target.value)}
+              />
+            </div>
+          
+            <div className="form-group">
+              <label htmlFor="email">Email</label>
+              <input
+                className="form-control"
+                name="email"
+                onChange={(e) => setEmail(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
+              <label htmlFor="phone">Phone</label>
+              <input
+                className="form-control"
+                name="phone"
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
             <label htmlFor="dogName">Dog's name</label>
-            <input
-              name="dogName"
-              onChange={(e) => setDogName(e.target.value)}
-            ></input>
+              <input
+                className="form-control"
+                name="dogName"
+                onChange={(e) => setDogName(e.target.value)}
+              />
+            </div>
+            <div className="form-group">
             <label htmlFor="size">Dog's size</label>
-            <input
-              name="size"
-              list="size"
-              onChange={(e) => setSize(e.target.value)}
-            ></input>
+              <input
+              className="form-control"
+                name="size"
+                list="size"
+                onChange={(e) => setSize(e.target.value)}
+              />
+            </div>
             <datalist id="size">
               <option value="small (up to 10 kg)" />
               <option value="medium (11-20 kg)" />
               <option value="large (more than 20 kg)" />
             </datalist>
-            <p>Dog's hair</p>
-            <label htmlFor="short">short</label>
-            <input
-              type="radio"
-              name="hair"
-              id="short"
-              value="short"
-              onChange={(e) => setHair(e.target.value)}
-            />
-            <label htmlFor="long">long</label>
-            <input
-              type="radio"
-              name="hair"
-              id="long"
-              value="long"
-              onChange={(e) => setHair(e.target.value)}
-            />
+            <div className="form-group" >
+              <p>Dog's hair</p>
+              <label className="radiolable" htmlFor="short">short</label>
+              <input
+                className="radiobtn"
+                type="radio"
+                name="hair"
+                id="short"
+                value="short"
+                onChange={(e) => setHair(e.target.value)}
+              />
+              <label className="radiolable" htmlFor="long">long</label>
+              <input
+                className="radiobtn"
+                type="radio"
+                name="hair"
+                id="long"
+                value="long"
+                onChange={(e) => setHair(e.target.value)}
+              />
+            </div>
+            
           </form>
         </Modal>
       </div>

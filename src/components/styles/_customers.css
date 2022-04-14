@@ -1,0 +1,36 @@
+.customer-title {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.customer-name-title {
+  font-size: 2rem;
+  margin-bottom: 1rem;
+  margin-top: 1rem;
+}
+
+.search {
+  width: 80%;
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+.btn-float-right {
+  width: 100%;
+  display:flex;
+  justify-content: flex-end;
+  margin-bottom: 20px;
+}
+
+.table-customers-head {
+  background-color: #BCDBFF;
+}
+
+.radiobtn {
+  margin-right: 24px;
+}
+
+.radiolable {
+  padding-right: 8px;
+}

@@ -20,7 +20,7 @@ function TableCustomers( { data }){
     return (
         <>
         <MaUTable>
-            <TableHead>
+            <TableHead className="table-customers-head">
                 <TableRow>
                     <TableCell>Name</TableCell>
                     <TableCell>Email</TableCell>

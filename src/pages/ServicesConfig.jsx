@@ -55,9 +55,6 @@ function ServicesConfig() {
       <Header />
       
       <div className="content">
-        <div className="content-block">
-          
-        </div>
         <div className="section-title">
           <img src={icon} alt="service-icon" />
           <h2>Services</h2>
