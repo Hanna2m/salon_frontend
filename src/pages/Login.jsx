@@ -7,6 +7,8 @@ import * as Yup from "yup";
 import useAuth from "../hooks/useAuth";
 import Header from "../components/Header";
 
+import "../components/styles/_login.css";
+
 function Login() {
   const { setAuth } = useAuth();
 
@@ -65,12 +67,12 @@ function Login() {
   };
 
   return (
-    <div>
+    <section className="login">
       <Header />
       <div className="content">
         <h2>Log in</h2>
         <div className="register-form" style={{ width: "480px" }}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form className="form-wrapper" onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
@@ -97,7 +99,7 @@ function Login() {
           </form>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
