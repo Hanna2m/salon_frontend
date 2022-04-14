@@ -1,18 +1,3 @@
-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  width: 100%;
-  padding: 1rem;
-  margin-bottom: 1rem;
-}
-
 .logo {
   height: 3.5rem;
-}
-
-.navbar-link {
-  margin: 0 0.5rem;
-  text-transform: uppercase;
-  color: inherit;
 }
