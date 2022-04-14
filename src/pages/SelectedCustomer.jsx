@@ -4,7 +4,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Modal from "../components/Modal";
 import Header from "../components/Header";
-import "../components/styles/_selectCustomer.css";
+import "../components/styles/_customers.css";
 import { Button } from "@material-ui/core";
 
 const SelectedCustomer = () => {

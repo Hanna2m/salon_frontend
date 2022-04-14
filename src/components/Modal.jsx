@@ -1,3 +1,4 @@
+import { Button } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import "./Modal.css";
 
@@ -28,8 +29,8 @@ const Modal = props => {
                 {props.children}
             </div>
             <div className="modal-footer">
-                <button className="button" onClick={props.onClose}>Cancel</button>
-                <button className="button" onClick={props.onSubmit}>Confirm</button>
+                <Button className="button" onClick={props.onClose}>Cancel</Button>
+                <Button className="button" onClick={props.onSubmit}>Confirm</Button>
             </div>
         </div>
     </div>
