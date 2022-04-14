@@ -1,0 +1,51 @@
+.summary {
+    display: flex;
+    background-color: FFF2F2;
+}
+#summary-image {
+    margin-left: auto;
+    margin-right: auto;
+}
+
+#summary-description {
+    margin-top: auto;
+    margin-bottom: auto;
+}
+.service-info {
+    border-bottom: 1px solid;
+}
+
+.time-slots {
+margin-left: 40px;
+}
+
+.confirm {
+    display: flex;
+    justify-content: center;
+}
+
+@media screen and (max-width: 600px) {
+    #summary-image{
+        display: none;    
+    }
+
+    .booking-time{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .summary{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin-top: 20px;
+    }
+    .calendar {
+        text-align: center;
+        margin-top: 20px;
+    }
+    .time-slots {
+        margin-left: 0px;
+        margin-top: 20px;
+    }
+  }
