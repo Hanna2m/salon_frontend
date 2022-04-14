@@ -6,6 +6,9 @@ import { yupResolver } from "@hookform/resolvers/yup";
 import * as Yup from "yup";
 import useAuth from "../hooks/useAuth";
 import Header from "../components/Header";
+import { Button } from "@material-ui/core";
+
+import "../components/styles/_login.css";
 
 function Login() {
   const { setAuth } = useAuth();
@@ -65,12 +68,12 @@ function Login() {
   };
 
   return (
-    <div>
+    <section className="login">
       <Header />
       <div className="content">
         <h2>Log in</h2>
         <div className="register-form" style={{ width: "480px" }}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form className="form-wrapper" onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
               <label htmlFor="email">Email</label>
               <input
@@ -93,11 +96,13 @@ function Login() {
               />
               <div className="invalid-feedback">{errors.password?.message}</div>
             </div>
-            <button type="submit">Log in</button>
+            <Button variant="outlined" type="submit">
+              Log in
+            </Button>
           </form>
         </div>
       </div>
-    </div>
+    </section>
   );
 }
 
