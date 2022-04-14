@@ -47,7 +47,6 @@ function NewBookingDate() {
   useEffect(() => {
     getSelectedServiceData();
     setUser(AuthService.getCurrentUser())
-    console.log("1", user)
   }, []);
 
   const handleDateChange = (date) => {
@@ -77,7 +76,6 @@ function NewBookingDate() {
     }
     setAvailableTimeSlots(workingHours);
   };
-  
 
   const getSelectedServiceData = async () => {
     try {
@@ -98,7 +96,6 @@ function NewBookingDate() {
     const isAvailableTime = false
     const isAvailableDay = true
     const reservedTime = {selectedTime, isAvailableTime};
-    console.log('1', new Date(selectedDate).toISOString())
     const days = (await getAllDates()).data;
     for (let i = 0; i < days.length; i++) {
       days[i].date = new Date(days[i].date).setHours(0, 0, 0, 0);
@@ -106,22 +103,21 @@ function NewBookingDate() {
     let day = days.filter((item) => {
       return item.date === selectedDate;
     });
-
-    console.log('2', day)
-    const changedTime = day[0].time.push(reservedTime);
-    console.log('3', day[0].time)
     const convertDay = new Date(selectedDate + 7200000).toISOString()
-    console.log('4', convertDay);
-   
-    
+    console.log('2', convertDay);
+    const newTime = {
+      startTime: selectedTime,
+      timeAvailable: false
+    }
+    const times = day[0].time
+    times.push(newTime)
+    console.log(times)
+    // change time aviability in DAY collection
     try {
       await axios.put(API_URL+"day/"+day[0]._id, { 
         date: convertDay,
         isAvailable: isAvailableDay,
-        time: [{
-          startTime: selectedTime,
-          isAvailable: isAvailableTime
-        }]
+        time: times
         })
       .then((res) => {
         console.log("POST", res.data);
@@ -129,7 +125,32 @@ function NewBookingDate() {
       });
     } catch (error) {
     console.log(error);
-  }
+    }
+    
+    const appointmentDetails = {
+      day: {
+        date: convertDay
+      },
+      time: {
+        startTime: selectedTime
+      },
+      customer: {
+        name: user.name
+      },
+      service: {
+        title: selectedService.title,
+        duration: selectedService.duration}
+    }
+    
+    //post data to Appointment collection
+    try {
+      await axios.post(API_URL+"appointment/",
+        appointmentDetails
+      )
+      .then ((res) => console.log('3', appointmentDetails, res))
+    } catch (error) {
+      console.log(error);
+    }
   }
 
   return (
