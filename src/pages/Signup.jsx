@@ -7,6 +7,9 @@ import Header from "../components/Header";
 import { ToastContainer, toast } from "react-toastify";
 import { injectStyle } from "react-toastify/dist/inject-style";
 import { useState } from "react";
+import { Button } from "@material-ui/core";
+
+import "../components/styles/_signup.css";
 
 if (typeof window !== "undefined") {
   injectStyle();
@@ -140,12 +143,12 @@ function Signup() {
   };
 
   return (
-    <div>
+    <div className="signup">
       <Header />
       <div className="content">
         <h2>Sign up</h2>
         <div className="register-form" style={{ width: "480px" }}>
-          <form onSubmit={handleSubmit(onSubmit)}>
+          <form className="form-wrapper" onSubmit={handleSubmit(onSubmit)}>
             <div className="form-group">
               <label htmlFor="name">Name</label>
               <input
@@ -299,7 +302,9 @@ function Signup() {
               </div>
             </div>
             <div className="form-group">
-              <button type="submit">Sign up</button>
+              <Button variant="outlined" type="submit">
+                Sign up
+              </Button>
               <button
                 type="button"
                 onClick={reset}
