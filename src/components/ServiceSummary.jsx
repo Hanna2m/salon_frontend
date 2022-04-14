@@ -6,7 +6,7 @@ function ServiceSummary(props) {
 
   return (
     <section>
-      <div>
+      <div className="service-info">
         <h4>Service summary</h4>
         {!selectedService ? (
           <h4>Loading ... </h4>

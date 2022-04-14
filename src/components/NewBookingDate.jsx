@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import "./styles/_newBooking.css";
 import DatePicker from "react-datepicker";
 import { useParams } from "react-router-dom";
 import axios from "axios";
@@ -10,7 +11,10 @@ import AuthService from "../services/auth.service";
 import { get } from "react-hook-form";
 import { Button, Link } from "@material-ui/core";
 import Modal from "./Modal";
-import moment, { defineLocale } from "moment";
+import moment from "moment";
+import { ToastContainer, toast } from "react-toastify";
+import { injectStyle } from "react-toastify/dist/inject-style";
+import petWash from "../assets/PetGrooming.png"
 
 const getAllDates = async () => {
   try {
@@ -28,6 +32,11 @@ const getWorkTimes = async () => {
     console.log(error.message);
   }
 };
+
+if (typeof window !== "undefined") {
+  injectStyle();
+}
+
 function NewBookingDate() {
   const { serviceId } = useParams();
   const params = useParams();
@@ -151,16 +160,30 @@ function NewBookingDate() {
     } catch (error) {
       console.log(error);
     }
+
+    toast.success("Appointment successfully created");
+    setTimeout(() => {
+      window.location = "/"
+    }, 3000)
+    
+    
   }
 
   return (
     <div className="content">
       <h3>Make Appointment</h3>
       <section>
-        <ServiceSummary selectedService={selectedService} />
-        <div>
-          <p>Appointment time: {selectedTime}</p>
+        <div className="summary" style={{backgroundColor: "FFF2F2"}}>
+          <div id="summary-description">
+            <ServiceSummary selectedService={selectedService} />
+            <p style={{marginTop: "30px"}}>Appointment time: {selectedTime}</p>
+          </div>
+          <div id="summary-image">
+            <img src={petWash} />
+          </div>
         </div>
+        
+        
       </section>
       
       {/* Not for MVP */}
@@ -182,17 +205,17 @@ function NewBookingDate() {
             />
           </div>
           <div className="time-slots">
-              <h4>Select Time:</h4>
-              {availableTimeSlots.length > 0 &&
+            <h4>Select Time:</h4>
+            {availableTimeSlots.length > 0 &&
               (availableTimeSlots.map((item) => <Button  onClick={(e) => setSelectedTime(item.startTime)} key={item.startTime}>{item.startTime}</Button>))}
           </div>
         </div>
         
 
         <section>
-          <div>
+          <div className="confirm">
             {(user) &&
-            <Button variant="contained" onClick={handleBookTime}>Book the appointment</Button>
+            <Button variant="contained" onClick={handleBookTime} style={{marginTop: "20px", backgroundColor: "#864BF8", color: "white"}}>Book the appointment</Button>
             }
             {(!user) &&
             <p>Please <Link replace state={{ from: location }} className="navbar-link" to="/login">Log in</Link> 
@@ -222,6 +245,7 @@ function NewBookingDate() {
           
         </section>
       </Modal>
+     <ToastContainer position="top-center" />
     </div>
   );
 }
