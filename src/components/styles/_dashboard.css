@@ -3,6 +3,7 @@
 }
 
 .dashboard-card-container {
+  width: 100%;
   display: flex;
   justify-content: space-around;
   padding: 5rem 0;
