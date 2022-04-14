@@ -4,6 +4,8 @@ import { useParams, useNavigate } from "react-router-dom";
 import axios from "axios";
 import Modal from "../components/Modal";
 import Header from "../components/Header";
+import "../components/styles/_selectCustomer.css";
+import { Button } from "@material-ui/core";
 
 const SelectedCustomer = () => {
   let params = useParams();
@@ -81,17 +83,19 @@ const SelectedCustomer = () => {
       <Header />
       <div className="content">
         <div id="info">
-          <h4>{customer.name}</h4>
-          <button onClick={() => setShowDelete(true)}>Delete</button>
-          <button>Book time</button>
+          <h4 className="customer-name-title">{customer.name}</h4>
+          <Button variant="contained">Book Time</Button>
           <div className="contact-info">
-            <h5>Contact information</h5>
+            <h5 className="customer-title">Contact information</h5>
             <p>Phone: {customer.phone}</p>
             <p>Email: {customer.email}</p>
-            <button>Edit</button>
+            <Button variant="contained">Edit</Button>
+            <Button variant="contained" onClick={() => setShowDelete(true)}>
+              Delete
+            </Button>
           </div>
           <div className="dogs-info">
-            <h5>Dog(s)</h5>
+            <h5 className="customer-title">Dog(s)</h5>
             <ul>
               {customer.dogs.map((d) => (
                 <li key={d._id}>
@@ -99,12 +103,14 @@ const SelectedCustomer = () => {
                   <p>Size: {d.size}</p>
                   <p>Hair: {d.hair}</p>
                   <p>Info: {d.info}</p>
-                  <button>Edit</button>
-                  <button>Delete</button>
+                  <Button variant="contained">Edit</Button>
+                  <Button variant="contained">Delete</Button>
                 </li>
               ))}
             </ul>
-            <button onClick={() => setShowAdd(true)}>Add dog</button>
+            <Button variant="contained" onClick={() => setShowAdd(true)}>
+              Add dog
+            </Button>
           </div>
         </div>
         <Modal
