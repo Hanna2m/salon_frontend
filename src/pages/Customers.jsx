@@ -65,64 +65,73 @@ function Customers() {
   return (
     <>
       <Header />
-      <h2>Customers</h2>
-      <button onClick={() => setShow(true)}>Add customer</button>
-      <input
-        type="text"
-        placeholder="Search..."
-        className="search"
-        onChange={(e) => setQuery(e.target.value)}
-      />
-      <TableCustomers data={search(allCustomers)} />
-      <Modal onClose={() => setShow(false)} show={show} onSubmit={handleSubmit}>
-        <form>
-          <label htmlFor="name">Name</label>
-          <input name="name" onChange={(e) => setName(e.target.value)}></input>
-          <label htmlFor="email">Email</label>
-          <input
-            name="email"
-            onChange={(e) => setEmail(e.target.value)}
-          ></input>
-          <label htmlFor="phone">Phone</label>
-          <input
-            name="phone"
-            onChange={(e) => setPhone(e.target.value)}
-          ></input>
-          <label htmlFor="dogName">Dog's name</label>
-          <input
-            name="dogName"
-            onChange={(e) => setDogName(e.target.value)}
-          ></input>
-          <label htmlFor="size">Dog's size</label>
-          <input
-            name="size"
-            list="size"
-            onChange={(e) => setSize(e.target.value)}
-          ></input>
-          <datalist id="size">
-            <option value="small (up to 10 kg)" />
-            <option value="medium (11-20 kg)" />
-            <option value="large (more than 20 kg)" />
-          </datalist>
-          <p>Dog's hair</p>
-          <label htmlFor="short">short</label>
-          <input
-            type="radio"
-            name="hair"
-            id="short"
-            value="short"
-            onChange={(e) => setHair(e.target.value)}
-          />
-          <label htmlFor="long">long</label>
-          <input
-            type="radio"
-            name="hair"
-            id="long"
-            value="long"
-            onChange={(e) => setHair(e.target.value)}
-          />
-        </form>
-      </Modal>
+      <div className="content">
+        <h2>Customers</h2>
+        <button onClick={() => setShow(true)}>Add customer</button>
+        <input
+          type="text"
+          placeholder="Search..."
+          className="search"
+          onChange={(e) => setQuery(e.target.value)}
+        />
+        <TableCustomers data={search(allCustomers)} />
+        <Modal
+          onClose={() => setShow(false)}
+          show={show}
+          onSubmit={handleSubmit}
+        >
+          <form>
+            <label htmlFor="name">Name</label>
+            <input
+              name="name"
+              onChange={(e) => setName(e.target.value)}
+            ></input>
+            <label htmlFor="email">Email</label>
+            <input
+              name="email"
+              onChange={(e) => setEmail(e.target.value)}
+            ></input>
+            <label htmlFor="phone">Phone</label>
+            <input
+              name="phone"
+              onChange={(e) => setPhone(e.target.value)}
+            ></input>
+            <label htmlFor="dogName">Dog's name</label>
+            <input
+              name="dogName"
+              onChange={(e) => setDogName(e.target.value)}
+            ></input>
+            <label htmlFor="size">Dog's size</label>
+            <input
+              name="size"
+              list="size"
+              onChange={(e) => setSize(e.target.value)}
+            ></input>
+            <datalist id="size">
+              <option value="small (up to 10 kg)" />
+              <option value="medium (11-20 kg)" />
+              <option value="large (more than 20 kg)" />
+            </datalist>
+            <p>Dog's hair</p>
+            <label htmlFor="short">short</label>
+            <input
+              type="radio"
+              name="hair"
+              id="short"
+              value="short"
+              onChange={(e) => setHair(e.target.value)}
+            />
+            <label htmlFor="long">long</label>
+            <input
+              type="radio"
+              name="hair"
+              id="long"
+              value="long"
+              onChange={(e) => setHair(e.target.value)}
+            />
+          </form>
+        </Modal>
+      </div>
     </>
   );
 }
