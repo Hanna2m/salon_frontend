@@ -1,0 +1,29 @@
+.dashboard-content {
+  padding: 0 3rem 3rem 0;
+}
+
+.dashboard-card-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-around;
+  padding: 5rem 0;
+}
+
+.dashboard-card {
+  border: 1px solid #c3c3c3;
+  border-radius: 10px;
+  padding: 2rem 3rem;
+  color: inherit;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.dashboard-card:hover {
+  text-decoration: none;
+  color: inherit;
+  background-color: #ebebebc9;
+}
+
+.admin-cal {
+  margin-top: 4rem;
+}
