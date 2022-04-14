@@ -3,6 +3,7 @@ import axios from "axios";
 import TableCustomers from "../components/Table";
 import Modal from "../components/Modal";
 import Header from "../components/Header";
+import { Button } from "@material-ui/core";
 
 function Customers() {
   const [query, setQuery] = useState("");
@@ -67,7 +68,11 @@ function Customers() {
       <Header />
       <div className="content">
         <h2>Customers</h2>
-        <button onClick={() => setShow(true)}>Add customer</button>
+        <Button variant="contained" onClick={() => setShow(true)}>
+          Add customer
+        </Button>
+        <br />
+
         <input
           type="text"
           placeholder="Search..."
