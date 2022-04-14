@@ -4,7 +4,6 @@ header {
   align-items: center;
   width: 100%;
   padding: 1rem;
-  margin-bottom: 1rem;
 }
 
 .logo {
@@ -12,8 +11,9 @@ header {
 }
 
 .navbar-link {
-  margin: 0 0.5rem;
+  margin: 0 1rem;
   text-transform: uppercase;
+  letter-spacing: 1px;
   color: inherit;
 }
 
@@ -22,6 +22,7 @@ header {
   display: flex;
   flex-direction: row;
 }
+
 .menu {
   display: flex;
   align-items: flex-end;
@@ -30,8 +31,37 @@ header {
 #auth {
   display: flex;
   flex-direction: column;
-  align-items: end;
+  align-items: flex-end;
 }
+
 #links {
   margin-bottom: 3px;
+  display: flex;
+  align-items: center;
+}
+
+.greeting {
+  text-transform: capitalize;
+  margin: 0 1rem 2px;
+  color: #864bf8;
+}
+
+@media screen and (max-width: 500px) {
+  .greeting {
+    display: none;
+  }
+  header {
+    padding: 0;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .logo {
+    height: 3rem;
+  }
+  .navbar-link {
+    font-size: 0.875rem;
+    margin: 0 0.25rem;
+    letter-spacing: 0;
+  }
 }
