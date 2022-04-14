@@ -16,7 +16,6 @@ function Header() {
 
   return (
     <header>
-      
       <nav className="navbar">
         <Link to="/">
           <img src={logo} className="logo" />
@@ -24,22 +23,18 @@ function Header() {
         {user && (
           <div className="menu">
             <div id="links">
-              {user.role === "admin" && (
+              <div id="auth">
+                <h6 className="greeting">Hello, {user.name} </h6>
+              </div>
+              {user.role === "Admin" && (
                 <Link to="/dashboard" className="navbar-link">
                   Dashboard
                 </Link>
               )}
             </div>
-            <div id="auth">
-              <h6>Hello, {user.name} </h6>
-              <Button variant="outlined" size="small" onClick={handleLogout}>Log out</Button>
-            </div>
-              {/* <Link to="/" className="navbar-link">
-                Home
-              </Link> */}
-              
-              
-            
+            <Button variant="outlined" size="small" onClick={handleLogout}>
+              Log out
+            </Button>
           </div>
         )}
         {!user && (
