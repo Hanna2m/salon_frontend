@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
+import "../components/styles/_addService.css"
 import axios from "axios";
 import Header from "../components/Header";
 import { Button } from "@material-ui/core";
 import ServiceItem from "./ServiceItem";
+import TextField from '@mui/material/TextField';
 
 function ServicesConfig() {
   const [serviceTitle, setServiceTitle] = useState("");
@@ -50,41 +52,53 @@ function ServicesConfig() {
   return (
     <div>
       <Header />
+      
       <div className="content">
-        <h2>Services component</h2>
-        <h3>Add New Service</h3>
-        <form onSubmit={addNewService}>
-          <label>Title: </label>
-          <input
-            type="text"
-            name="title"
-            value={serviceTitle}
-            onChange={(e) => setServiceTitle(e.target.value)}
-          />
-          <label>Description: </label>
-          <input
+      <h2>Services</h2>
+        <div className="add-service">
+        <h6>Add New Service</h6>
+        <form onSubmit={addNewService} >
+          <div className="form-add-service">
+            <div className="block">
+              <label>Title: </label>
+              <input
+                label="Name"
+                type="text"
+                name="title"
+                value={serviceTitle}
+                onChange={(e) => setServiceTitle(e.target.value)}
+              />
+              <label>Cost: </label>
+              <input
+                type="number"
+                name="cost"
+                value={serviceCost}
+                onChange={(e) => setServiceCost(e.target.value)}
+                onBlur={(e) => setServiceCost(e.target.value)}
+              />
+              <label>Duration: </label>
+              <input
+                type="number"
+                name="duration"
+                value={serviceDuration}
+                onChange={(e) => setServiceDuration(e.target.value)}
+              />
+          </div>
+          <div className="block" >
+            <label>Description: </label>
+            <textarea
+            rows="6"
             type="text"
             name="description"
             value={serviceDescription}
             onChange={(e) => setServiceDescription(e.target.value)}
           />
-          <label>Cost: </label>
-          <input
-            type="number"
-            name="cost"
-            value={serviceCost}
-            onChange={(e) => setServiceCost(e.target.value)}
-            onBlur={(e) => setServiceCost(e.target.value)}
-          />
-          <label>Duration: </label>
-          <input
-            type="number"
-            name="duration"
-            value={serviceDuration}
-            onChange={(e) => setServiceDuration(e.target.value)}
-          />
-          <button type="submit">Save</button>
+          </div>
+          </div>
+          <Button type="submit" style={{float:"right"}}>Save</Button>
         </form>
+        </div>
+        
 
         <section>
           <h3>Current Services List</h3>
