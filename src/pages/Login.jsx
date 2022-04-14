@@ -53,12 +53,12 @@ function Login() {
           const role = user.role;
           console.log("2", name);
           setAuth({ token, role, name });
-          // if (user.role === "admin") {
-          //   window.location = "/dashboard";
-          // }
-          // else {
+          if (user.role === "admin") {
+            window.location = "/dashboard";
+          }
+          else {
           navigate(from, { replace: true });
-          // }
+          }
         }
         return res.data;
       });
