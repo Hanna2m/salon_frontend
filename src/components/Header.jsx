@@ -23,14 +23,15 @@ function Header() {
         {user && (
           <div className="menu">
             <div id="links">
-              <div id="auth">
-                <h6 className="greeting">Hello, {user.name} </h6>
-              </div>
-              {user.role === "Admin" && (
+            {user.role === "admin" && (
                 <Link to="/dashboard" className="navbar-link">
                   Dashboard
                 </Link>
               )}
+              <div id="auth">
+                <h6 className="greeting">Hello, {user.name} </h6>
+              </div>
+             
             </div>
             <Button variant="outlined" size="small" onClick={handleLogout}>
               Log out
