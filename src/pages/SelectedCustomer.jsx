@@ -79,84 +79,86 @@ const SelectedCustomer = () => {
   return (
     <>
       <Header />
-      <div id="info">
-        <h4>{customer.name}</h4>
-        <button onClick={() => setShowDelete(true)}>Delete</button>
-        <button>Book time</button>
-        <div className="contact-info">
-          <h5>Contact information</h5>
-          <p>Phone: {customer.phone}</p>
-          <p>Email: {customer.email}</p>
-          <button>Edit</button>
+      <div className="content">
+        <div id="info">
+          <h4>{customer.name}</h4>
+          <button onClick={() => setShowDelete(true)}>Delete</button>
+          <button>Book time</button>
+          <div className="contact-info">
+            <h5>Contact information</h5>
+            <p>Phone: {customer.phone}</p>
+            <p>Email: {customer.email}</p>
+            <button>Edit</button>
+          </div>
+          <div className="dogs-info">
+            <h5>Dog(s)</h5>
+            <ul>
+              {customer.dogs.map((d) => (
+                <li key={d._id}>
+                  <p>Name: {d.dogName}</p>
+                  <p>Size: {d.size}</p>
+                  <p>Hair: {d.hair}</p>
+                  <p>Info: {d.info}</p>
+                  <button>Edit</button>
+                  <button>Delete</button>
+                </li>
+              ))}
+            </ul>
+            <button onClick={() => setShowAdd(true)}>Add dog</button>
+          </div>
         </div>
-        <div className="dogs-info">
-          <h5>Dog(s)</h5>
-          <ul>
-            {customer.dogs.map((d) => (
-              <li key={d._id}>
-                <p>Name: {d.dogName}</p>
-                <p>Size: {d.size}</p>
-                <p>Hair: {d.hair}</p>
-                <p>Info: {d.info}</p>
-                <button>Edit</button>
-                <button>Delete</button>
-              </li>
-            ))}
-          </ul>
-          <button onClick={() => setShowAdd(true)}>Add dog</button>
-        </div>
+        <Modal
+          titel="Delete information"
+          onClose={() => setShowDelete(false)}
+          show={showDelete}
+          onSubmit={() => handleDelete()}
+        >
+          The information about Customer {customer.name} would be deleted. Are
+          you sure?
+        </Modal>
+        <Modal
+          titel="Add Dog"
+          onClose={() => setShowAdd(false)}
+          show={showAdd}
+          onSubmit={() => handleAddDog(dogName, size, hair)}
+        >
+          <form>
+            <label htmlFor="dogName">Dog's name</label>
+            <input
+              name="dogName"
+              onChange={(e) => setDogName(e.target.value)}
+            ></input>
+            <label htmlFor="size">Dog's size</label>
+            <input
+              name="size"
+              list="size"
+              onChange={(e) => setSize(e.target.value)}
+            ></input>
+            <datalist id="size">
+              <option value="small (up to 10 kg)" />
+              <option value="medium (11-20 kg)" />
+              <option value="large (more than 20 kg)" />
+            </datalist>
+            <p>Dog's hair</p>
+            <label htmlFor="short">short</label>
+            <input
+              type="radio"
+              name="hair"
+              id="short"
+              value="short"
+              onChange={(e) => setHair(e.target.value)}
+            />
+            <label htmlFor="long">long</label>
+            <input
+              type="radio"
+              name="hair"
+              id="long"
+              value="long"
+              onChange={(e) => setHair(e.target.value)}
+            />
+          </form>
+        </Modal>
       </div>
-      <Modal
-        titel="Delete information"
-        onClose={() => setShowDelete(false)}
-        show={showDelete}
-        onSubmit={() => handleDelete()}
-      >
-        The information about Customer {customer.name} would be deleted. Are you
-        sure?
-      </Modal>
-      <Modal
-        titel="Add Dog"
-        onClose={() => setShowAdd(false)}
-        show={showAdd}
-        onSubmit={() => handleAddDog(dogName, size, hair)}
-      >
-        <form>
-          <label htmlFor="dogName">Dog's name</label>
-          <input
-            name="dogName"
-            onChange={(e) => setDogName(e.target.value)}
-          ></input>
-          <label htmlFor="size">Dog's size</label>
-          <input
-            name="size"
-            list="size"
-            onChange={(e) => setSize(e.target.value)}
-          ></input>
-          <datalist id="size">
-            <option value="small (up to 10 kg)" />
-            <option value="medium (11-20 kg)" />
-            <option value="large (more than 20 kg)" />
-          </datalist>
-          <p>Dog's hair</p>
-          <label htmlFor="short">short</label>
-          <input
-            type="radio"
-            name="hair"
-            id="short"
-            value="short"
-            onChange={(e) => setHair(e.target.value)}
-          />
-          <label htmlFor="long">long</label>
-          <input
-            type="radio"
-            name="hair"
-            id="long"
-            value="long"
-            onChange={(e) => setHair(e.target.value)}
-          />
-        </form>
-      </Modal>
     </>
   );
 };

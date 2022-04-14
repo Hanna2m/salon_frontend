@@ -50,62 +50,64 @@ function ServicesConfig() {
   return (
     <div>
       <Header />
-      <h2>Services component</h2>
-      <h3>Add New Service</h3>
-      <form onSubmit={addNewService}>
-        <label>Title: </label>
-        <input
-          type="text"
-          name="title"
-          value={serviceTitle}
-          onChange={(e) => setServiceTitle(e.target.value)}
-        />
-        <label>Description: </label>
-        <input
-          type="text"
-          name="description"
-          value={serviceDescription}
-          onChange={(e) => setServiceDescription(e.target.value)}
-        />
-        <label>Cost: </label>
-        <input
-          type="number"
-          name="cost"
-          value={serviceCost}
-          onChange={(e) => setServiceCost(e.target.value)}
-          onBlur={(e) => setServiceCost(e.target.value)}
-        />
-        <label>Duration: </label>
-        <input
-          type="number"
-          name="duration"
-          value={serviceDuration}
-          onChange={(e) => setServiceDuration(e.target.value)}
-        />
-        <button type="submit">Save</button>
-      </form>
+      <div className="content">
+        <h2>Services component</h2>
+        <h3>Add New Service</h3>
+        <form onSubmit={addNewService}>
+          <label>Title: </label>
+          <input
+            type="text"
+            name="title"
+            value={serviceTitle}
+            onChange={(e) => setServiceTitle(e.target.value)}
+          />
+          <label>Description: </label>
+          <input
+            type="text"
+            name="description"
+            value={serviceDescription}
+            onChange={(e) => setServiceDescription(e.target.value)}
+          />
+          <label>Cost: </label>
+          <input
+            type="number"
+            name="cost"
+            value={serviceCost}
+            onChange={(e) => setServiceCost(e.target.value)}
+            onBlur={(e) => setServiceCost(e.target.value)}
+          />
+          <label>Duration: </label>
+          <input
+            type="number"
+            name="duration"
+            value={serviceDuration}
+            onChange={(e) => setServiceDuration(e.target.value)}
+          />
+          <button type="submit">Save</button>
+        </form>
 
-      <section>
-        <h3>Current Services List</h3>
-        <ul>
-          {allServices &&
-            allServices.map((s) => (
-              <ServiceItem
-                {...s}
-                allSeriveds={allServices}
-                setAllServices={setAllServices}
-                serviceTitle={serviceTitle}
-                setServiceTitle={setServiceTitle}
-                serviceDescription={serviceDescription}
-                setServiceDescription={setServiceDescription}
-                serviceCost={serviceCost}
-                setServiceCost={setServiceCost}
-                serviceDuration={serviceDuration}
-                setServiceDuration={setServiceDuration}
-              />
-            ))}
-        </ul>
-      </section>
+        <section>
+          <h3>Current Services List</h3>
+          <ul>
+            {allServices &&
+              allServices.map((s) => (
+                <ServiceItem
+                  {...s}
+                  allSeriveds={allServices}
+                  setAllServices={setAllServices}
+                  serviceTitle={serviceTitle}
+                  setServiceTitle={setServiceTitle}
+                  serviceDescription={serviceDescription}
+                  setServiceDescription={setServiceDescription}
+                  serviceCost={serviceCost}
+                  setServiceCost={setServiceCost}
+                  serviceDuration={serviceDuration}
+                  setServiceDuration={setServiceDuration}
+                />
+              ))}
+          </ul>
+        </section>
+      </div>
     </div>
   );
 }
