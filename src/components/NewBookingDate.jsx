@@ -164,7 +164,7 @@ function NewBookingDate() {
     toast.success("Appointment successfully created");
     setTimeout(() => {
       window.location = "/"
-    }, 3000)
+    }, 5000)
     
     
   }

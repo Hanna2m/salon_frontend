@@ -14,6 +14,8 @@
   width: 80%;
   margin-top: 20px;
   margin-bottom: 20px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .btn-float-right {
@@ -33,4 +35,36 @@
 
 .radiolable {
   padding-right: 8px;
+}
+
+.sub-title {
+  display: flex;
+  flex-direction: row;
+}
+
+#info {
+  width: 100%
+}
+
+.customer-title {
+  display: flex;
+}
+.dogs-info {
+margin-top: 40px;
+}
+
+.contact-info {
+ border-bottom: 1px solid rgba(0,0,0,.1);
+}
+
+.sub-title img {
+  margin-right: 10px;
+}
+
+.info {
+  padding-left: 50px;
+}
+
+ul{
+  list-style-type: none;
 }
