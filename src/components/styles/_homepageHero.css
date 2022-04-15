@@ -36,8 +36,8 @@ section {
 }
 
 .hero-image-container {
-  flex-basis: 80%;
-  max-width: 30rem;
+  /* flex-basis: 80%;
+  max-width: 30rem; */
 }
 
 .hero-image {

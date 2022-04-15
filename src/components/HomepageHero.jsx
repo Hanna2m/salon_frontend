@@ -3,6 +3,7 @@ import { useLottie } from "lottie-react";
 import "./styles/_homepageHero.css";
 import heroImg from "../assets/heroImg.jpg";
 import dogApproval from "./lotties/dogAnimation.json"
+import hero from "../assets/img_grooming.jpeg"
 
 function HomepageHero() {
   const options = {
@@ -19,7 +20,8 @@ function HomepageHero() {
     <section>
       <div className="hero-container">
         <div className="hero-image-container">
-          { View }
+          {/* { View } */}
+          <img src={hero} alt="hero" />
         </div>
         <div className="hero-copy">
           <h2 className="hero-heading">Welcome</h2>
