@@ -10,6 +10,7 @@
   flex-direction: column;
   max-width: 790px;
   margin: auto;
+  padding: 10px;
 }
 
 h3{
@@ -28,6 +29,7 @@ h2 {
 
 .section-title {
   display: flex;
+  justify-content: center;
 }
 
 .section-title img {

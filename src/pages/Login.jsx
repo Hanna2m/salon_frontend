@@ -70,7 +70,7 @@ function Login() {
   return (
     <section className="login">
       <Header />
-      <div className="content">
+      <div className="content" id="login">
         <h2>Log in</h2>
         <div className="register-form" style={{ width: "480px" }}>
           <form className="form-wrapper" onSubmit={handleSubmit(onSubmit)}>

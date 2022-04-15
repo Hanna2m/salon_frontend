@@ -5,7 +5,7 @@
 }
 .form-add-service {
     display: flex;
-    background-color: #fff7f7;
+    background-color: #FFFAFA;
     padding: 20px;
     flex-direction: row;
     justify-content: space-between;
@@ -13,7 +13,7 @@
 }
 
 .current {
-    background-color: #fff7f7;
+    background-color: #FFFAFA;
     padding: 20px;
     border-radius: 8px;
 }

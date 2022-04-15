@@ -6,6 +6,8 @@ import Modal from "../components/Modal";
 import Header from "../components/Header";
 import "../components/styles/_customers.css";
 import { Button } from "@material-ui/core";
+import iconPaw from "../assets/icon_paw.svg"
+import iconContact from "../assets/icon_contact.svg"
 
 const SelectedCustomer = () => {
   let params = useParams();
@@ -83,34 +85,61 @@ const SelectedCustomer = () => {
       <Header />
       <div className="content">
         <div id="info">
-          <h4 className="customer-name-title">{customer.name}</h4>
-          <Button variant="contained">Book Time</Button>
+          <div className="customer-title">
+            <h4 className="customer-name-title">{customer.name}</h4>
+            <div className="btn-float-right">
+              <Button variant="contained" style={{ backgroundColor: "rgb(134, 75, 248)",
+    color: "white"}}>Book Time</Button>
+            </div>
+          </div>
+          
+
           <div className="contact-info">
-            <h5 className="customer-title">Contact information</h5>
-            <p>Phone: {customer.phone}</p>
-            <p>Email: {customer.email}</p>
-            <Button variant="contained">Edit</Button>
-            <Button variant="contained" onClick={() => setShowDelete(true)}>
+            <div className="sub-title">
+              <img src={iconContact} alt="icon-paw" />
+              <h5 className="customer-title">Contact information</h5>
+            </div>
+            <div className="info">
+              <p>Phone: {customer.phone}</p>
+              <p>Email: {customer.email}</p>
+            </div>
+          </div>
+          <div className="btn-float-right">
+            <Button variant="text">Edit</Button>
+            <Button variant="text" onClick={() => setShowDelete(true)}>
               Delete
             </Button>
           </div>
           <div className="dogs-info">
-            <h5 className="customer-title">Dog(s)</h5>
-            <ul>
-              {customer.dogs.map((d) => (
-                <li key={d._id}>
-                  <p>Name: {d.dogName}</p>
-                  <p>Size: {d.size}</p>
-                  <p>Hair: {d.hair}</p>
-                  <p>Info: {d.info}</p>
-                  <Button variant="contained">Edit</Button>
-                  <Button variant="contained">Delete</Button>
-                </li>
-              ))}
-            </ul>
-            <Button variant="contained" onClick={() => setShowAdd(true)}>
-              Add dog
-            </Button>
+            <div className="sub-title">
+              <img src={iconPaw} alt="icon-paw" />
+              <h5 className="customer-title">Dog(s)</h5>
+              <div className="btn-float-right">
+                <Button variant="outlined" onClick={() => setShowAdd(true)}>
+                  Add dog
+                </Button>
+              </div>
+            </div>
+            <div className="info">
+              <ul>
+                {customer.dogs.map((d) => (
+                  <li key={d._id}>
+                    <p>Name: {d.dogName}</p>
+                    <p>Size: {d.size}</p>
+                    <p>Hair: {d.hair}</p>
+                    <p>Info: {d.info}</p>
+                    <hr />
+                    <div className="btn-float-right">
+                      <Button variant="text">Edit</Button>
+                      <Button variant="text">Delete</Button>
+                    </div>
+                    
+                  </li>
+                ))}
+              </ul>
+            </div>
+            
+            
           </div>
         </div>
         <Modal
