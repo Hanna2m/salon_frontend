@@ -17,6 +17,18 @@ header {
   color: inherit;
 }
 
+.navbar-link:hover,
+.hover-style:hover {
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.hover-style:hover {
+  border-bottom: 4px solid #864bf8;
+  padding-bottom: 8px;
+  color: inherit;
+}
+
 .navbar {
   width: 100vw;
   display: flex;

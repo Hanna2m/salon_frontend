@@ -253,7 +253,7 @@ function NewBookingDate() {
                 >
                   Sign up
                 </Link>{" "}
-                to proceed the booking
+                to proceed with the booking
               </p>
             )}
           </div>
