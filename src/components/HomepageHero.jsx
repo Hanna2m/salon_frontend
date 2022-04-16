@@ -2,17 +2,15 @@ import React from "react";
 import { useLottie } from "lottie-react";
 import "./styles/_homepageHero.css";
 import heroImg from "../assets/heroImg.jpg";
-import dogApproval from "./lotties/dogAnimation.json"
-import hero from "../assets/img_grooming.jpeg"
+import dogApproval from "./lotties/dogAnimation.json";
+import hero from "../assets/img_grooming.jpeg";
 
 function HomepageHero() {
   const options = {
     animationData: dogApproval,
     loop: true,
     autoplay: true,
-    rendererSettings: {
-
-    }
+    rendererSettings: {},
   };
 
   const { View } = useLottie(options);
@@ -26,12 +24,11 @@ function HomepageHero() {
         <div className="hero-copy">
           <h2 className="hero-heading">Welcome</h2>
           <h3 className="hero-subheading">
-            Your local professional grooming service for your best friend. Our
-            services are listed below.
+            Your local professional grooming service for your best friend.{" "}
+            <br></br>Let us pamper your pup!
           </h3>
         </div>
       </div>
-      
     </section>
   );
 }
