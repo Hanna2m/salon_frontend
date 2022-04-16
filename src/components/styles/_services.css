@@ -16,10 +16,11 @@
 }
 
 .services-heading {
+  text-align: center;
   font-size: 1.25rem;
   text-transform: uppercase;
   letter-spacing: 1px;
-  margin: 2rem;
+  margin: 2rem 0 4rem;
 }
 
 .service-card-title {
