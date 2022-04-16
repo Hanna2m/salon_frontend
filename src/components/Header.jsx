@@ -24,7 +24,7 @@ function Header() {
           <div className="menu">
             <div id="links">
               {user.role === "admin" && (
-                <Link to="/dashboard" className="navbar-link hover-style">
+                <Link to="/dashboard" className="navbar-link">
                   Dashboard
                 </Link>
               )}
