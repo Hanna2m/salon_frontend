@@ -15,6 +15,7 @@ import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import { injectStyle } from "react-toastify/dist/inject-style";
 import petWash from "../assets/PetGrooming.png";
+import "../components/styles/_datepicker.css";
 
 const getAllDates = async () => {
   try {
