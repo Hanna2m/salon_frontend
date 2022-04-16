@@ -54,44 +54,50 @@ const ServiceItem = ({
 
   return contentEditable ? (
     <form>
-<div className="form-add-service">
-            <div className="block">
-              <label>Title: </label>
-              <input
-                label="Name"
-                type="text"
-                name="title"
-                value={serviceTitle}
-                onChange={(e) => setServiceTitle(e.target.value)}
-              />
-              <label>Cost: </label>
-              <input
-                type="number"
-                name="cost"
-                value={serviceCost}
-                onChange={(e) => setServiceCost(e.target.value)}
-                onBlur={(e) => setServiceCost(e.target.value)}
-              />
-              <label>Duration: </label>
-              <input
-                type="number"
-                name="duration"
-                value={serviceDuration}
-                onChange={(e) => setServiceDuration(e.target.value)}
-              />
-          </div>
-          <div className="block" >
-            <label>Description: </label>
-            <textarea
+      <div className="form-add-service">
+        <div className="block">
+          <label>Title: </label>
+          <input
+            label="Name"
+            type="text"
+            name="title"
+            defaultValue={title}
+            onChange={(e) => setNewTitle(e.target.value)}
+          />
+          <label>Cost: </label>
+          <input
+            type="number"
+            name="cost"
+            defaultValue={cost}
+            onChange={(e) => setNewCost(e.target.value)}
+            //onBlur={(e) => setServiceCost(e.target.value)}
+          />
+          <label>Duration: </label>
+          <input
+            type="number"
+            name="duration"
+            defaultValue={duration}
+            onChange={(e) => setNewDuration(e.target.value)}
+          />
+        </div>
+        <div className="block">
+          <label>Description: </label>
+          <textarea
             rows="6"
             type="text"
             name="description"
-            value={serviceDescription}
-            onChange={(e) => setServiceDescription(e.target.value)}
+            defaultValue={description}
+            onChange={(e) => setNewDescription(e.target.value)}
           />
-          </div>
-          </div>
-          <Button type="submit" style={{float:"right"}}>Save</Button>
+        </div>
+      </div>
+      <Button
+        type="submit"
+        style={{ float: "right" }}
+        onClick={() => updateService(_id)}
+      >
+        Save
+      </Button>
     </form>
   ) : (
     <div key={title} className="service-info" id="config">
@@ -108,7 +114,7 @@ const ServiceItem = ({
         <span>Duration: {duration}mins </span>
       </p>
       <Button
-        style={{float:"right"}}
+        style={{ float: "right" }}
         onClick={() => {
           deleteService(_id);
         }}
@@ -116,7 +122,7 @@ const ServiceItem = ({
         Delete
       </Button>
       <Button
-      style={{float:"right"}}
+        style={{ float: "right" }}
         onClick={() => {
           setContentEditable(true);
           updateService(_id);

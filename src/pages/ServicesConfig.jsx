@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from "react";
-import "../components/styles/_configService.css"
+import "../components/styles/_configService.css";
 import axios from "axios";
 import Header from "../components/Header";
 import { Button } from "@material-ui/core";
 import ServiceItem from "./ServiceItem";
-import TextField from '@mui/material/TextField';
-import icon from "../assets/icon_service.svg"
+//import TextField from '@mui/material/TextField';
+import icon from "../assets/icon_service.svg";
 
 function ServicesConfig() {
   const [serviceTitle, setServiceTitle] = useState("");
@@ -53,71 +53,72 @@ function ServicesConfig() {
   return (
     <div>
       <Header />
-      
+
       <div className="content">
         <div className="section-title">
           <img src={icon} alt="service-icon" />
           <h2>Services</h2>
         </div>
         <div className="add-service">
-        <h5 id="section-title">Add New Service</h5>
-        <form onSubmit={addNewService} >
-          <div className="form-add-service">
-            <div className="block">
-              <div className="form-group">
-                <label>Title: </label>
-                <input
-                  className="form-control"
-                  label="Name"
-                  type="text"
-                  name="title"
-                  value={serviceTitle}
-                  onChange={(e) => setServiceTitle(e.target.value)}
-                />
+          <h5 id="section-title">Add New Service</h5>
+          <form onSubmit={addNewService}>
+            <div className="form-add-service">
+              <div className="block">
+                <div className="form-group">
+                  <label>Title: </label>
+                  <input
+                    className="form-control"
+                    label="Name"
+                    type="text"
+                    name="title"
+                    value={serviceTitle}
+                    onChange={(e) => setServiceTitle(e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Cost: </label>
+                  <input
+                    className="form-control"
+                    type="number"
+                    name="cost"
+                    value={serviceCost}
+                    onChange={(e) => setServiceCost(e.target.value)}
+                    onBlur={(e) => setServiceCost(e.target.value)}
+                  />
+                </div>
+                <div className="form-group">
+                  <label>Duration: </label>
+                  <input
+                    className="form-control"
+                    type="number"
+                    name="duration"
+                    value={serviceDuration}
+                    onChange={(e) => setServiceDuration(e.target.value)}
+                  />
+                </div>
               </div>
-              <div className="form-group">
-                <label>Cost: </label>
-                <input
-                  className="form-control"
-                  type="number"
-                  name="cost"
-                  value={serviceCost}
-                  onChange={(e) => setServiceCost(e.target.value)}
-                  onBlur={(e) => setServiceCost(e.target.value)}
-                />
+              <div className="block">
+                <div className="form-group">
+                  <label>Description: </label>
+                  <textarea
+                    className="form-control"
+                    rows="6"
+                    type="text"
+                    name="description"
+                    value={serviceDescription}
+                    onChange={(e) => setServiceDescription(e.target.value)}
+                  />
+                </div>
+                <Button type="submit" variant="outlined">
+                  Save
+                </Button>
               </div>
-              <div className="form-group">
-                <label>Duration: </label>
-                <input
-                  className="form-control"
-                  type="number"
-                  name="duration"
-                  value={serviceDuration}
-                  onChange={(e) => setServiceDuration(e.target.value)}
-                />
-              </div>
-          </div>
-          <div className="block" >
-            <div className="form-group">
-              <label>Description: </label>
-              <textarea
-              className="form-control"
-              rows="6"
-              type="text"
-              name="description"
-              value={serviceDescription}
-              onChange={(e) => setServiceDescription(e.target.value)}
-            />
             </div>
-            <Button type="submit" variant="outlined">Save</Button>
-          </div>
-          </div>
-          
-        </form>
+          </form>
         </div>
-        
+
         <section>
-        <h5 id="section-title">Current Services</h5>
+          <h5 id="section-title">Current Services</h5>
           <div className="current">
             <ul>
               {allServices &&
@@ -138,8 +139,6 @@ function ServicesConfig() {
                 ))}
             </ul>
           </div>
-          
-         
         </section>
       </div>
     </div>
