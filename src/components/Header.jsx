@@ -23,15 +23,14 @@ function Header() {
         {user && (
           <div className="menu">
             <div id="links">
-            {user.role === "admin" && (
-                <Link to="/dashboard" className="navbar-link">
+              {user.role === "admin" && (
+                <Link to="/dashboard" className="navbar-link hover-style">
                   Dashboard
                 </Link>
               )}
               <div id="auth">
                 <h6 className="greeting">Hello, {user.name} </h6>
               </div>
-             
             </div>
             <Button variant="outlined" size="small" onClick={handleLogout}>
               Log out
@@ -40,14 +39,14 @@ function Header() {
         )}
         {!user && (
           <div>
-            <Link to="/" className="navbar-link">
+            <Link to="/" className="navbar-link hover-style">
               Home
             </Link>
             <Link
               to="/signup"
               replace
               state={{ from: location }}
-              className="navbar-link"
+              className="navbar-link hover-style"
             >
               Sign up
             </Link>
@@ -55,7 +54,7 @@ function Header() {
               to="/login"
               replace
               state={{ from: location }}
-              className="navbar-link"
+              className="navbar-link hover-style"
             >
               Log in
             </Link>
