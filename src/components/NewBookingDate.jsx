@@ -14,7 +14,7 @@ import Modal from "./Modal";
 import moment from "moment";
 import { ToastContainer, toast } from "react-toastify";
 import { injectStyle } from "react-toastify/dist/inject-style";
-import petWash from "../assets/PetGrooming.png"
+import petWash from "../assets/PetGrooming.png";
 
 const getAllDates = async () => {
   try {
@@ -51,11 +51,11 @@ function NewBookingDate() {
   const [showModal, setShowModal] = useState(false);
   let workingHours = [];
 
-  const API_URL = 'https://groomer-server.herokuapp.com/';
+  const API_URL = "https://groomer-server.herokuapp.com/";
 
   useEffect(() => {
     getSelectedServiceData();
-    setUser(AuthService.getCurrentUser())
+    setUser(AuthService.getCurrentUser());
   }, []);
 
   const handleDateChange = (date) => {
@@ -88,7 +88,7 @@ function NewBookingDate() {
 
   const getSelectedServiceData = async () => {
     try {
-      await axios.get(API_URL+`service/${id}`).then((res) => {
+      await axios.get(API_URL + `service/${id}`).then((res) => {
         let data = res.data;
         setSelectedService(data);
       });
@@ -96,15 +96,15 @@ function NewBookingDate() {
       console.log(error.message);
     }
   };
-  
+
   const handleBookTime = (e) => {
     setShowModal(true);
   };
 
-  const handleAddAppointment = async (selectedDate, selectedTime, user) =>{
-    const isAvailableTime = false
-    const isAvailableDay = true
-    const reservedTime = {selectedTime, isAvailableTime};
+  const handleAddAppointment = async (selectedDate, selectedTime, user) => {
+    const isAvailableTime = false;
+    const isAvailableDay = true;
+    const reservedTime = { selectedTime, isAvailableTime };
     const days = (await getAllDates()).data;
     for (let i = 0; i < days.length; i++) {
       days[i].date = new Date(days[i].date).setHours(0, 0, 0, 0);
@@ -112,80 +112,80 @@ function NewBookingDate() {
     let day = days.filter((item) => {
       return item.date === selectedDate;
     });
-    const convertDay = new Date(selectedDate + 7200000).toISOString()
-    console.log('2', convertDay);
+    const convertDay = new Date(selectedDate + 7200000).toISOString();
+    console.log("2", convertDay);
     const newTime = {
       startTime: selectedTime,
-      timeAvailable: false
-    }
-    const times = day[0].time
-    times.push(newTime)
-    console.log(times)
+      timeAvailable: false,
+    };
+    const times = day[0].time;
+    times.push(newTime);
+    console.log(times);
     // change time aviability in DAY collection
     try {
-      await axios.put(API_URL+"day/"+day[0]._id, { 
-        date: convertDay,
-        isAvailable: isAvailableDay,
-        time: times
+      await axios
+        .put(API_URL + "day/" + day[0]._id, {
+          date: convertDay,
+          isAvailable: isAvailableDay,
+          time: times,
         })
-      .then((res) => {
-        console.log("POST", res.data);
-        setShowModal(false);
-      });
+        .then((res) => {
+          console.log("POST", res.data);
+          setShowModal(false);
+        });
     } catch (error) {
-    console.log(error);
+      console.log(error);
     }
-    
+
     const appointmentDetails = {
       day: {
-        date: convertDay
+        date: convertDay,
       },
       time: {
-        startTime: selectedTime
+        startTime: selectedTime,
       },
       customer: {
-        name: user.name
+        name: user.name,
       },
       service: {
         title: selectedService.title,
-        duration: selectedService.duration}
-    }
-    
+        duration: selectedService.duration,
+      },
+    };
+
     //post data to Appointment collection
     try {
-      await axios.post(API_URL+"appointment/",
-        appointmentDetails
-      )
-      .then ((res) => console.log('3', appointmentDetails, res))
+      await axios
+        .post(API_URL + "appointment/", appointmentDetails)
+        .then((res) => console.log("3", appointmentDetails, res));
     } catch (error) {
       console.log(error);
     }
 
     toast.success("Appointment successfully created");
     setTimeout(() => {
-      window.location = "/"
-    }, 5000)
-    
-    
-  }
+      window.location = "/";
+    }, 5000);
+  };
 
   return (
     <div className="content">
-      <h3>Make Appointment</h3>
+      <h3>Choose Date & Time</h3>
       <section>
-        <div className="summary" style={{backgroundColor: "FFF2F2"}}>
+        <div className="summary" style={{ backgroundColor: "FFF2F2" }}>
           <div id="summary-description">
             <ServiceSummary selectedService={selectedService} />
-            <p style={{marginTop: "30px"}}>Appointment time: {selectedTime}</p>
+            {}
+            {/* <p style={{ marginTop: "30px" }}>
+              Appointment time: {selectedTime}
+            </p> */}
           </div>
           <div id="summary-image">
             <img src={petWash} />
           </div>
         </div>
-        
-        
       </section>
-      
+
       {/* Not for MVP */}
       {/* <section>
         <DogDetails />
@@ -194,7 +194,7 @@ function NewBookingDate() {
       <section>
         <div className="booking-time">
           <div className="calendar">
-            <h4>Select Date:</h4>
+            <h5>Select Date:</h5>
             <DatePicker
               minDate={new Date()}
               // selected={startDate}
@@ -205,47 +205,79 @@ function NewBookingDate() {
             />
           </div>
           <div className="time-slots">
-            <h4>Select Time:</h4>
+            <h5>Select Time:</h5>
             {availableTimeSlots.length > 0 &&
-              (availableTimeSlots.map((item) => <Button  onClick={(e) => setSelectedTime(item.startTime)} key={item.startTime}>{item.startTime}</Button>))}
+              availableTimeSlots.map((item) => (
+                <Button
+                  onClick={(e) => setSelectedTime(item.startTime)}
+                  key={item.startTime}
+                >
+                  {item.startTime}
+                </Button>
+              ))}
           </div>
         </div>
-        
 
         <section>
           <div className="confirm">
-            {(user) &&
-            <Button variant="contained" onClick={handleBookTime} style={{marginTop: "20px", backgroundColor: "#864BF8", color: "white"}}>Book the appointment</Button>
-            }
-            {(!user) &&
-            <p>Please <Link replace state={{ from: location }} className="navbar-link" to="/login">Log in</Link> 
-              or <Link replace state={{ from: location }} className="navbar-link" to="/login">Sign up</Link> to proceed the booking</p>
-            }
+            {user && (
+              <Button
+                variant="contained"
+                onClick={handleBookTime}
+                style={{
+                  marginTop: "20px",
+                  backgroundColor: "#864BF8",
+                  color: "white",
+                }}
+              >
+                Book appointment
+              </Button>
+            )}
+            {!user && (
+              <p>
+                Please{" "}
+                <Link
+                  replace
+                  state={{ from: location }}
+                  className="navbar-link"
+                  to="/login"
+                >
+                  Log in
+                </Link>
+                or{" "}
+                <Link
+                  replace
+                  state={{ from: location }}
+                  className="navbar-link"
+                  to="/login"
+                >
+                  Sign up
+                </Link>{" "}
+                to proceed the booking
+              </p>
+            )}
           </div>
-          
-
         </section>
       </section>
-      <Modal onClose={() => setShowModal(false)}
-            show={showModal}
-            onSubmit={() => handleAddAppointment(selectedDate, selectedTime, user)}>
+      <Modal
+        onClose={() => setShowModal(false)}
+        show={showModal}
+        onSubmit={() => handleAddAppointment(selectedDate, selectedTime, user)}
+      >
         <section>
           <h3>Your appointment summary</h3>
           <ServiceSummary selectedService={selectedService} />
-          {(selectedDate && selectedTime) && (
+          {selectedDate && selectedTime && (
             <p>
-            On {moment(selectedDate).format("DD MMM YYYY")} at {selectedTime}
-          </p>
-          )} 
-          {(!selectedTime) && (
-            <h3>
-            Please select the time before
-          </h3>
-          )} 
-          
+              On {moment(selectedDate).format("DD MMM YYYY")} at {selectedTime}
+            </p>
+          )}
+          {!selectedTime && (
+            <h4 style={{ color: "red" }}>Please select a time!</h4>
+          )}
         </section>
       </Modal>
-     <ToastContainer position="top-center" />
+      <ToastContainer position="top-center" />
     </div>
   );
 }
