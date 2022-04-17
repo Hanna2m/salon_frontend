@@ -23,6 +23,10 @@ header {
   text-decoration: none;
 }
 
+.dashboard-link:hover {
+  color: inherit;
+}
+
 .hover-style:hover {
   border-bottom: 4px solid #864bf8;
   padding-bottom: 8px;
