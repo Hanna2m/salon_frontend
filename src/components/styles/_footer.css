@@ -1,0 +1,25 @@
+footer {
+  box-sizing: border-box;
+  margin-top: 10rem;
+  padding: 3rem 5rem;
+  min-width: 100%;
+  background-color: #bcdbffbb;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+}
+
+.footer-socials-container {
+  width: 6rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.footer-socials-container:hover {
+  cursor: pointer;
+}
+
+.footer-socials-container,
+.footer-hours {
+  align-self: flex-end;
+}
