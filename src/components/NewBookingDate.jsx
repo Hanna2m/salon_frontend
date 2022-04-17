@@ -266,7 +266,7 @@ function NewBookingDate() {
         onSubmit={() => handleAddAppointment(selectedDate, selectedTime, user)}
       >
         <section>
-          <h3>Your appointment summary</h3>
+          {/* <h3>Your appointment summary</h3> */}
           <ServiceSummary selectedService={selectedService} />
           {selectedDate && selectedTime && (
             <p>
