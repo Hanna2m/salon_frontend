@@ -1,3 +1,8 @@
+.services-container {
+  background: #ff84371b;
+  border-radius: 8px;
+}
+
 .service-card-wrap {
   display: flex;
   justify-content: center;
