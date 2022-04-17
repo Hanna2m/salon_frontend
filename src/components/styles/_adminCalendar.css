@@ -1,0 +1,29 @@
+.rbc-event {
+  background: #864bf8;
+}
+
+.rbc-off-range-bg {
+  background-color: #eeeeee;
+}
+
+.rbc-toolbar button.rbc-active {
+  background-color: #f1f1f1;
+}
+
+.rbc-toolbar button.rbc-active:hover {
+  background-color: #f1f1f1;
+}
+
+.rbc-month-view {
+  border: none;
+}
+
+.rbc-today {
+  background-color: #d3c0f931;
+}
+
+.admin-cal {
+  background: #d3c0f927;
+  padding: 20px;
+  border-radius: 8px;
+}

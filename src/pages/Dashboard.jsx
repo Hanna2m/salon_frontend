@@ -5,7 +5,7 @@ import AdminCalendar from "../components/AdminCalendar";
 import AuthContext from "../context/AuthProvider";
 import Header from "../components/Header";
 import "../components/styles/_dashboard.css";
-import icon from "../assets/icon_dashbord.svg"
+import icon from "../assets/icon_dashbord.svg";
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -17,7 +17,7 @@ const Dashboard = () => {
           <img src={icon} alt="customer-icon" />
           <h2>Dashboard</h2>
         </div>
-        
+
         <div className="dashboard-card-container">
           <div>
             <Link className="dashboard-card" to="/services">
@@ -31,7 +31,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="admin-cal">
-          <h3>Appointments for today:</h3>
+          <h3 style={{ marginBottom: "2rem" }}>Appointments for today:</h3>
           <AdminCalendar />
         </div>
         <Outlet />

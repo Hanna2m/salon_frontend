@@ -4,6 +4,7 @@ import moment from "moment";
 import axios from "axios";
 
 import "react-big-calendar/lib/css/react-big-calendar.css";
+import "../components/styles/_adminCalendar.css";
 
 function AdminCalendar() {
   const localizer = momentLocalizer(moment);
